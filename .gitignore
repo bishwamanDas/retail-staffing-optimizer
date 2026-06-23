@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Output and Reports
+# Note: Uncomment these if you want to push the generated outputs to GitHub
+# output/
+# reports/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
