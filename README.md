@@ -1,4 +1,4 @@
-# 🚀 RevInsight Store Staffing Analyzer
+# 🚀 Store Staffing Analyzer
 
 A data-driven staffing optimization tool for retail clothing stores. The application reads historical sales data from a CSV, performs exploratory data analysis, forecasts future demand, computes financial metrics, and recommends optimal staffing levels to maximize gross margins.
 
@@ -8,7 +8,7 @@ This project demonstrates advanced data science workflows, time-series forecasti
 
 # 📊 Project Overview
 
-A branded-clothing store in Bangalore has been operating with a general policy of maintaining a fixed number of sales staff. Following a recent resignation, the owner needs to decide whether to hire a replacement. This tool provides a comprehensive, data-driven answer by:
+A branded-clothing store has been operating with a general policy of maintaining a fixed number of sales staff. Following a recent resignation, the owner needs to decide whether to hire a replacement. This tool provides a comprehensive, data-driven answer by:
 
 * Performing exploratory data analysis (EDA) on historical sales data
 * Analyzing salesperson productivity and diminishing returns
