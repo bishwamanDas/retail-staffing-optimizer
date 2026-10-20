@@ -101,6 +101,14 @@ def create_app(project_root: str | Path | None = None) -> FastAPI:
         allow_headers=["*"],
     )
 
+    @application.middleware("http")
+    async def add_security_headers(request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        return response
+
     service = get_service(root)
 
     # ------------------------------------------------------------------ #
