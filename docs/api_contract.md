@@ -269,3 +269,49 @@ Returns **201** with the Analysis payload (below). **422** on invalid input.
 
 Status codes: `400` bad request · `404` unknown run · `422` validation error ·
 `500` unexpected failure (body still uses the error shape).
+
+---
+
+## Client Integration Examples
+
+### cURL
+```bash
+# Health check
+curl -s https://store-staffing.onrender.com/api/v1/health
+
+# Trigger analysis with custom parameters
+curl -X POST https://store-staffing.onrender.com/api/v1/analyses \
+  -F "salary=3.5" \
+  -F "commission=0.06" \
+  -F "forecast_months=12"
+```
+
+### Python (`requests`)
+```python
+import requests
+
+BASE_URL = "https://store-staffing.onrender.com/api/v1"
+
+# Trigger a scenario simulation
+payload = {
+    "run_id": "0f3c...",
+    "salary": 3.2,
+    "commission": 0.05,
+    "horizon": 6,
+    "sales_shock_pct": -5.0
+}
+res = requests.post(f"{BASE_URL}/simulate", json=payload)
+data = res.json()
+print("Simulated margin:", data["scenarios"]["B"]["total_gross_margin"])
+```
+
+### JavaScript (`fetch`)
+```javascript
+const res = await fetch("https://store-staffing.onrender.com/api/v1/analyses", {
+  method: "POST",
+  body: new FormData(document.getElementById("params-form"))
+});
+const analysis = await res.json();
+console.log("Recommended policy:", analysis.recommendation.decision);
+```
+
