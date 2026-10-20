@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import logging
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -103,10 +104,13 @@ def create_app(project_root: str | Path | None = None) -> FastAPI:
 
     @application.middleware("http")
     async def add_security_headers(request, call_next):
+        start_time = time.perf_counter()
         response = await call_next(request)
+        process_time = time.perf_counter() - start_time
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["X-Process-Time"] = f"{process_time:.4f}s"
         return response
 
     service = get_service(root)
