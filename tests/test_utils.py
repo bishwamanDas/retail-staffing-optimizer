@@ -23,6 +23,7 @@ from store_staffing.utils import (
     safe_div,
     setup_output_dirs,
     to_jsonable,
+    compute_file_sha256,
 )
 
 
@@ -299,3 +300,10 @@ class TestOutputHelpers:
         assert safe_div(10, 4) == 2.5
         assert safe_div(10, 0) == 0.0
         assert safe_div(10, 0, default=-1) == -1.0
+
+    def test_compute_file_sha256(self, sample_csv) -> None:
+        digest = compute_file_sha256(sample_csv)
+        assert isinstance(digest, str)
+        assert len(digest) == 64
+        assert digest == compute_file_sha256(sample_csv)
+
