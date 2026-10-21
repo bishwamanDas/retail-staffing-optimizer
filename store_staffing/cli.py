@@ -131,6 +131,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--log-level", default="info", help="uvicorn log level (debug|info|warning|error)."
     )
 
+    bench_parser = subparsers.add_parser("benchmark", help="Measure pipeline execution latency.")
+    bench_parser.add_argument(
+        "csv_file", nargs="?", default="data/RevI-Test.csv", help="Path to CSV file."
+    )
+    bench_parser.add_argument(
+        "--runs", type=int, default=3, help="Number of benchmark iterations (default 3)."
+    )
+
     return parser
 
 
@@ -285,7 +293,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # Legacy form: `python run.py data.csv` -- the `run` sub-command is
     # implied when the first positional argument is not a known command.
-    known_commands = {"run", "serve"}
+    known_commands = {"run", "serve", "benchmark"}
     first_positional = next((arg for arg in raw_args if not arg.startswith("-")), None)
     if first_positional is not None and first_positional not in known_commands:
         raw_args = ["run"] + raw_args
@@ -300,6 +308,13 @@ def main(argv: list[str] | None = None) -> int:
         return _run_analysis_command(args)
     if args.command == "serve":
         return _serve_command(args)
+    if args.command == "benchmark":
+        import json
+        from .benchmarks import benchmark_pipeline
+
+        res = benchmark_pipeline(args.csv_file, runs=args.runs)
+        _safe_print(json.dumps(res, indent=2))
+        return 0
 
     parser.print_help()
     return 1
