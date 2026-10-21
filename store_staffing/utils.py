@@ -44,6 +44,7 @@ __all__ = [
     "format_currency",
     "infer_month_of_year",
     "to_jsonable",
+    "compute_file_sha256",
 ]
 
 # --------------------------------------------------------------------------- #
@@ -656,3 +657,26 @@ def chunked(sequence: Sequence[Any], size: int) -> Iterable[Sequence[Any]]:
         raise ValueError("size must be > 0")
     for start in range(0, len(sequence), size):
         yield sequence[start : start + size]
+
+
+def compute_file_sha256(filepath: str | Path) -> str:
+    """Compute the SHA-256 cryptographic hash of a dataset file.
+
+    Parameters
+    ----------
+    filepath : str or Path
+        Target file path.
+
+    Returns
+    -------
+    str
+        Hexadecimal digest string.
+    """
+    import hashlib
+
+    hasher = hashlib.sha256()
+    with open(filepath, "rb") as stream:
+        for chunk in iter(lambda: stream.read(65536), b""):
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
