@@ -456,6 +456,23 @@ builds the Docker image on every push.
 
 ---
 
+## Benchmarking
+
+Measure execution latency across pipeline stages:
+
+```bash
+python run.py benchmark --runs 3
+```
+
+| Stage | Latency | Notes |
+|---|---|---|
+| **Data Load & Summary** | ~35 ms | CSV parsing, validation, monthly grouping |
+| **Forecasting Zoo (7 Models)** | ~5.8 s | 4 walk-forward CV origins + recursive RF |
+| **Financial & Scenarios** | ~0.4 s | First-difference OLS, 4 policies, backtest |
+| **Full Pipeline Total** | **~6.2 s** | Standard 81-month dataset |
+
+---
+
 ## Deployment
 
 | Target | Command |
