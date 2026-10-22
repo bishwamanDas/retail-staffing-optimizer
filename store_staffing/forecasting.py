@@ -307,9 +307,15 @@ def exponential_smoothing_forecast(
     periods: int = FORECAST_PERIODS,
     seasonal: bool = True,
 ) -> np.ndarray:
-    """Forecast future sales using **Holt-Winters Exponential Smoothing**.
+    r"""Forecast future sales using **Holt-Winters Exponential Smoothing**.
 
-    Attempts a full Holt-Winters model (trend + seasonality) first.  If
+    Implements additive Holt-Winters formulation with state equations:
+        Level:    \ell_t = \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1})
+        Trend:    b_t = \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1}
+        Seasonal: s_t = \gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m}
+        Forecast: \hat{y}_{t+h|t} = \ell_t + h b_t + s_{t+h-m(k+1)}
+
+    Attempts a full Holt-Winters model (trend + seasonality) first. If
     that fails (e.g. insufficient data for seasonal estimation), it falls
     back to a damped-trend model and finally to simple exponential
     smoothing (level only).
