@@ -2050,10 +2050,36 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
   .app-header,
   .sidebar,
   .app-footer,
-  .toast-region {
-    display: none;
+  .toast-region,
+  .params-bar,
+  .skip-link {
+    display: none !important;
+  }
+
+  .content {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .panel-section {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  .panel {
+    border: 1px solid #cccccc !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 20px;
   }
 }
