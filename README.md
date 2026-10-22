@@ -9,8 +9,8 @@ make the hire.
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-203%20passing-brightgreen.svg)](tests/)
 
-> **Live demo** → [Store Staffing Analyzer](#-live-demo) &nbsp;·&nbsp;
-> **API docs** → `/api/docs` &nbsp;·&nbsp;
+> **Live demo** → [https://store-staffing.onrender.com](https://store-staffing.onrender.com) &nbsp;·&nbsp;
+> **API docs** → [https://store-staffing.onrender.com/api/docs](https://store-staffing.onrender.com/api/docs) &nbsp;·&nbsp;
 > **Report** → `reports/Recommendation_Report.pdf`
 
 ---
@@ -129,13 +129,11 @@ Running the shipped dataset through the pipeline:
 
 ## 🚀 Live demo
 
-> **Replace this section with your deployed URL.**
-
 | Resource | URL |
 |---|---|
-| **Dashboard** | `https://<your-app>.onrender.com` |
-| **API docs (Swagger)** | `https://<your-app>.onrender.com/api/docs` |
-| **OpenAPI schema** | `https://<your-app>.onrender.com/api/openapi.json` |
+| **Live Dashboard** | [store-staffing.onrender.com](https://store-staffing.onrender.com) |
+| **API docs (Swagger)** | [store-staffing.onrender.com/api/docs](https://store-staffing.onrender.com/api/docs) |
+| **OpenAPI schema** | [store-staffing.onrender.com/api/openapi.json](https://store-staffing.onrender.com/api/openapi.json) |
 
 **Deploy in five minutes (Render):**
 
