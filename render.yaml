@@ -11,7 +11,7 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn store_staffing.api.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/v1/health
-    autoDeploy: false
+    autoDeploy: true
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.8"

@@ -446,6 +446,8 @@ function populateDatasetSelect() {
 
 function readParams() {
   const dataset = el('param-dataset');
+  const fileInput = el('param-file');
+  const file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
   const salary = el('param-salary');
   const commission = el('param-commission');
   const months = el('param-forecast-months');
@@ -454,6 +456,7 @@ function readParams() {
     // An empty selection means "use the server's default", so no file
     // name is ever hard-coded here.
     dataset: dataset && dataset.value ? dataset.value : '',
+    file,
     salary: asNumber(salary ? salary.value : null),
     commission: asNumber(commission ? commission.value : null),
     forecast_months: asNumber(months ? months.value : null),
