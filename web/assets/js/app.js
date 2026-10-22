@@ -2042,6 +2042,16 @@ function initGlobalEvents() {
     const message = event && event.message ? event.message : 'Unexpected error.';
     toast('Unexpected error', message, 'error');
   });
+
+  window.addEventListener('offline', () => {
+    setHealthPill(false);
+    toast('Network offline', 'You have lost internet connectivity.', 'error');
+  });
+
+  window.addEventListener('online', () => {
+    toast('Back online', 'Connection restored. Re-checking API status…', 'info');
+    pollHealth();
+  });
 }
 
 /* -------------------------------------------------------------------------- */
