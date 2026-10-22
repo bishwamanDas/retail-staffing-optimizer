@@ -1,0 +1,60 @@
+# ---------------------------------------------------------------------------
+# RevInsight - Docker build context exclusions
+# Keeps the build context small and prevents host artefacts leaking into the
+# image.  Note: data/ and web/ are intentionally NOT ignored - the API needs
+# the bundled datasets and the static dashboard at runtime.
+# ---------------------------------------------------------------------------
+
+# Version control / tooling metadata
+.git
+.gitignore
+.gitattributes
+.github
+.kilo
+.kilocode
+.idea
+.vscode
+
+# Python caches and build artefacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+.tox/
+
+# Tests are not needed inside the runtime image
+tests/
+
+# Node tooling
+node_modules/
+npm-debug.log*
+
+# Generated runtime artefacts
+output/
+reports/
+runs/
+*.log
+
+# Documentation is not shipped inside the image
+docs/
+*.pdf
+!data/*.pdf
+
+# Secrets
+.env
+.env.*
+!.env.example

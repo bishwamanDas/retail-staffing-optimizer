@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>RevInsight · Store Staffing Analytics</title>
+    <meta
+      name="description"
+      content="RevInsight Store Staffing Analyzer — workforce productivity, demand forecasting and scenario planning for retail staffing decisions."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"
+      defer
+    ></script>
+    <script type="module" src="assets/js/app.js"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- Inline SVG icon sprite (Lucide-style strokes) -->
+    <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-activity" viewBox="0 0 24 24">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </symbol>
+      <symbol id="i-layout" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="9" rx="1" />
+        <rect x="14" y="3" width="7" height="5" rx="1" />
+        <rect x="14" y="12" width="7" height="9" rx="1" />
+        <rect x="3" y="16" width="7" height="5" rx="1" />
+      </symbol>
+      <symbol id="i-trending" viewBox="0 0 24 24">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+        <polyline points="16 7 22 7 22 13" />
+      </symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24">
+        <polygon points="12 2 2 7 12 12 22 7 12 2" />
+        <polyline points="2 17 12 22 22 17" />
+        <polyline points="2 12 12 17 22 12" />
+      </symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24">
+        <line x1="4" y1="21" x2="4" y2="14" />
+        <line x1="4" y1="10" x2="4" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12" y2="3" />
+        <line x1="20" y1="21" x2="20" y2="16" />
+        <line x1="20" y1="12" x2="20" y2="3" />
+        <line x1="1" y1="14" x2="7" y2="14" />
+        <line x1="9" y1="8" x2="15" y2="8" />
+        <line x1="17" y1="16" x2="23" y2="16" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </symbol>
+      <symbol id="i-book" viewBox="0 0 24 24">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4" />
+      </symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+      </symbol>
+      <symbol id="i-download" viewBox="0 0 24 24">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="7 10 12 15 17 10" />
+        <line x1="12" y1="15" x2="12" y2="3" />
+      </symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24">
+        <polyline points="23 4 23 10 17 10" />
+        <polyline points="1 20 1 14 7 14" />
+        <path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15" />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+        <line x1="12" y1="9" x2="12" y2="13" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </symbol>
+      <symbol id="i-info" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="16" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12.01" y2="8" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12" />
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <polygon points="6 3 20 12 6 21 6 3" />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24">
+        <line x1="18" y1="20" x2="18" y2="10" />
+        <line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="6" y1="20" x2="6" y2="14" />
+      </symbol>
+      <symbol id="i-table" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+        <line x1="3" y1="15" x2="21" y2="15" />
+        <line x1="9" y1="3" x2="9" y2="21" />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+      </symbol>
+      <symbol id="i-image" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <polyline points="21 15 16 10 5 21" />
+      </symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24">
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
+        <circle cx="12" cy="12" r="3" />
+      </symbol>
+    </svg>
+
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg class="icon"><use href="#i-activity"></use></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">RevInsight</span>
+          <span class="brand-sub">Store Staffing Analytics</span>
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <button
+          id="theme-toggle"
+          class="icon-btn theme-toggle"
+          type="button"
+          aria-label="Switch to light theme"
+          title="Toggle colour theme"
+        >
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+        </button>
+
+        <span id="api-status" class="status-pill is-busy" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-text">checking</span>
+        </span>
+
+        <a
+          id="report-link"
+          class="btn btn--primary"
+          href="#"
+          aria-disabled="true"
+          title="Download the PDF analysis report"
+        >
+          <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
+          <span class="btn--responsive-label">Download report</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <nav class="sidebar" aria-label="Dashboard sections">
+        <ul class="nav-list" id="nav-list" role="tablist" aria-orientation="vertical">
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-overview"
+              data-panel="overview"
+              aria-controls="panel-overview"
+              aria-selected="true"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-layout"></use></svg>
+              Overview
+              <span class="nav-index">01</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-forecast"
+              data-panel="forecast"
+              aria-controls="panel-forecast"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-trending"></use></svg>
+              Forecast
+              <span class="nav-index">02</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-scenarios"
+              data-panel="scenarios"
+              aria-controls="panel-scenarios"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg>
+              Scenarios
+              <span class="nav-index">03</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-simulator"
+              data-panel="simulator"
+              aria-controls="panel-simulator"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-sliders"></use></svg>
+              Simulator
+              <span class="nav-index">04</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-workforce"
+              data-panel="workforce"
+              aria-controls="panel-workforce"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>
+              Workforce
+              <span class="nav-index">05</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-sensitivity"
+              data-panel="sensitivity"
+              aria-controls="panel-sensitivity"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+              Sensitivity
+              <span class="nav-index">06</span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="nav-item"
+              type="button"
+              role="tab"
+              id="tab-methodology"
+              data-panel="methodology"
+              aria-controls="panel-methodology"
+              aria-selected="false"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg>
+              Methodology
+              <span class="nav-index">07</span>
+            </button>
+          </li>
+        </ul>
+
+        <div class="sidebar-note">
+          <strong>How to read this</strong>
+          All monetary values are in Lakhs (L).
+          <span id="units-hint" data-units-hint></span>
+          Deltas are measured against the best-performing scenario.
+        </div>
+      </nav>
+
+      <main class="content" id="main-content" tabindex="-1">
+        <!-- Global error / offline banner -->
+        <div id="error-banner" class="banner banner--error" role="alert" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-alert"></use></svg>
+          <div class="banner__body">
+            <p class="banner__title" id="error-title">Analysis API unreachable</p>
+            <p class="banner__text" id="error-text">
+              The dashboard could not reach the FastAPI service at <code>/api/v1</code>.
+            </p>
+          </div>
+          <button id="retry-btn" class="btn btn--sm" type="button">
+            <svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>
+            Retry
+          </button>
+        </div>
+
+        <!-- ============================ 1. OVERVIEW ============================ -->
+        <section
+          class="panel-section"
+          id="panel-overview"
+          role="tabpanel"
+          aria-labelledby="tab-overview"
+          tabindex="-1"
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Overview</h2>
+              <p class="section-sub" id="overview-subtitle">
+                Executive summary of staffing economics, demand outlook and forecast confidence.
+              </p>
+            </div>
+            <span class="run-badge" id="overview-run-id" hidden>run —</span>
+          </div>
+
+          <form class="params-bar" id="params-form" aria-label="Analysis parameters">
+            <div class="params-field">
+              <label for="param-dataset">Dataset</label>
+              <select id="param-dataset" name="dataset"></select>
+            </div>
+            <div class="params-field">
+              <label for="param-salary">Salary (L / month)</label>
+              <input
+                id="param-salary"
+                name="salary"
+                type="number"
+                min="0.1"
+                max="100"
+                step="0.1"
+                placeholder="Server default"
+                inputmode="decimal"
+              />
+            </div>
+            <div class="params-field">
+              <label for="param-commission">Commission rate</label>
+              <input
+                id="param-commission"
+                name="commission"
+                type="number"
+                min="0"
+                max="0.95"
+                step="0.005"
+                placeholder="Server default"
+                inputmode="decimal"
+              />
+            </div>
+            <div class="params-field">
+              <label for="param-forecast-months">Forecast horizon (months)</label>
+              <input
+                id="param-forecast-months"
+                name="forecast_months"
+                type="number"
+                min="1"
+                max="36"
+                step="1"
+                placeholder="Server default"
+                inputmode="numeric"
+              />
+            </div>
+            <div class="params-field">
+              <label for="param-start-month">Start month</label>
+              <input
+                id="param-start-month"
+                name="start_month"
+                type="number"
+                min="1"
+                max="12"
+                step="1"
+                placeholder="Server default"
+                inputmode="numeric"
+              />
+            </div>
+            <button class="btn btn--primary" id="params-submit" type="submit">
+              <svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg>
+              Re-run analysis
+            </button>
+            <p class="params-note" id="params-note">
+              Re-running executes the full forecasting &amp; financial pipeline on the server.
+            </p>
+          </form>
+
+          <div class="kpi-grid" id="kpi-grid"></div>
+
+          <div class="grid-2">
+            <article class="panel" id="verdict-panel">
+              <header class="panel-head">
+                <h3>Executive verdict</h3>
+                <span class="badge badge--neutral" id="verdict-confidence">—</span>
+              </header>
+              <div id="verdict-body"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Expected impact</h3>
+                <p class="panel-sub" id="impact-caption">
+                  Projection for the recommended plan.
+                </p>
+              </header>
+              <div id="impact-table" class="table-wrap"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <div>
+                <h3>Monthly sales &amp; forward forecast</h3>
+                <p class="panel-sub" id="forecast-band-sub">
+                  Historical monthly sales (solid) with the selected model's forecast (dashed) and a
+                  prediction band.
+                </p>
+              </div>
+              <span class="badge badge--accent" id="forecast-model-badge">—</span>
+            </header>
+            <div class="chart-frame chart-frame--lg">
+              <canvas
+                id="chart-forecast"
+                role="img"
+                aria-label="Line chart of historical monthly sales with forecast and 95 percent confidence band"
+              ></canvas>
+            </div>
+          </article>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Gross margin trend</h3>
+                <p class="panel-sub" id="margin-panel-sub">
+                  Monthly gross margin in Lakhs after commission and staff cost.
+                </p>
+              </header>
+              <div class="chart-frame">
+                <canvas
+                  id="chart-margin"
+                  role="img"
+                  aria-label="Area chart of monthly gross margin"
+                ></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Headcount vs. sales</h3>
+                <p class="panel-sub">
+                  Each point is a month: employees on X, sales on Y, bubble size scales with gross
+                  margin.
+                </p>
+              </header>
+              <div class="chart-frame">
+                <canvas
+                  id="chart-scatter"
+                  role="img"
+                  aria-label="Bubble chart of employees versus monthly sales"
+                ></canvas>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============================ 2. FORECAST ============================ -->
+        <section
+          class="panel-section"
+          id="panel-forecast"
+          role="tabpanel"
+          aria-labelledby="tab-forecast"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Forecast</h2>
+              <p class="section-sub">
+                Model leaderboard, ensemble composition and walk-forward backtest evidence.
+              </p>
+            </div>
+            <span class="run-badge" id="forecast-run-id" hidden>run —</span>
+          </div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Model leaderboard</h3>
+                <p class="panel-sub">Ranked by validation RMSE. Rank 1 is selected for forecasting.</p>
+              </header>
+              <div id="leaderboard" class="table-wrap"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Ensemble composition</h3>
+                <p class="panel-sub">Weights applied to each member model of the ensemble forecast.</p>
+              </header>
+              <div id="ensemble" class="table-wrap"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Walk-forward backtest</h3>
+              <p class="panel-sub">Actual versus predicted sales at each validation origin.</p>
+            </header>
+            <div class="chart-frame chart-frame--lg">
+              <canvas
+                id="chart-backtest"
+                role="img"
+                aria-label="Line chart comparing backtest actual and predicted sales"
+              ></canvas>
+            </div>
+            <div id="backtest-table" class="table-wrap"></div>
+          </article>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Methodology</h3>
+            </header>
+            <div id="forecast-methodology"></div>
+          </article>
+        </section>
+
+        <!-- ============================ 3. SCENARIOS ============================ -->
+        <section
+          class="panel-section"
+          id="panel-scenarios"
+          role="tabpanel"
+          aria-labelledby="tab-scenarios"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Scenarios</h2>
+              <p class="section-sub" id="scenarios-sub">
+                Staffing strategies compared over the forecast horizon, including ramp-up of a
+                new hire.
+              </p>
+            </div>
+            <span class="run-badge" id="scenarios-run-id" hidden>run —</span>
+          </div>
+
+          <div class="scenario-grid" id="scenario-cards"></div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Gross margin by scenario</h3>
+                <p class="panel-sub">Total gross margin over the horizon, in Lakhs.</p>
+              </header>
+              <div class="chart-frame chart-frame--sm">
+                <canvas
+                  id="chart-scenario-bar"
+                  role="img"
+                  aria-label="Bar chart of total gross margin for each staffing scenario"
+                ></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Cumulative margin path</h3>
+                <p class="panel-sub">Running gross margin by month for every scenario.</p>
+              </header>
+              <div class="chart-frame chart-frame--sm">
+                <canvas
+                  id="chart-scenario-cumulative"
+                  role="img"
+                  aria-label="Line chart of cumulative gross margin per scenario by month"
+                ></canvas>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Comparison table</h3>
+              <div class="row row--end">
+                <button class="btn btn--sm btn--ghost" id="download-scenarios" type="button">
+                  <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
+                  Download CSV
+                </button>
+              </div>
+            </header>
+            <div id="scenario-table" class="table-wrap"></div>
+          </article>
+        </section>
+
+        <!-- =========================== 4. SIMULATOR ============================ -->
+        <section
+          class="panel-section"
+          id="panel-simulator"
+          role="tabpanel"
+          aria-labelledby="tab-simulator"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Simulator</h2>
+              <p class="section-sub">
+                What-if sandbox for salary, commission, hiring horizon and demand shocks. Results are
+                computed by the server and reflected live.
+              </p>
+            </div>
+          </div>
+
+          <div class="sim-layout">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Assumptions</h3>
+                <span class="badge badge--neutral" id="sim-badge">idle</span>
+              </header>
+              <form class="sim-controls" id="sim-form">
+                <div class="control">
+                  <div class="control__top">
+                    <label class="control__label" for="sim-salary">Monthly salary</label>
+                    <output class="control__value" id="sim-salary-out" for="sim-salary">3.00 L</output>
+                  </div>
+                  <input
+                    type="range"
+                    id="sim-salary"
+                    name="salary"
+                    min="0.5"
+                    max="20"
+                    step="0.1"
+                    value="3"
+                  />
+                  <span class="control__hint" id="sim-salary-hint">
+                    Per employee per month
+                  </span>
+                </div>
+
+                <div class="control">
+                  <div class="control__top">
+                    <label class="control__label" for="sim-commission">Commission rate</label>
+                    <output class="control__value" id="sim-commission-out" for="sim-commission">5.0%</output>
+                  </div>
+                  <input
+                    type="range"
+                    id="sim-commission"
+                    name="commission"
+                    min="0"
+                    max="0.3"
+                    step="0.005"
+                    value="0.05"
+                  />
+                  <span class="control__hint">Fraction of sales paid to the sales team</span>
+                </div>
+
+                <div class="control">
+                  <div class="control__top">
+                    <label class="control__label" for="sim-horizon">Horizon</label>
+                    <output class="control__value" id="sim-horizon-out" for="sim-horizon">12 months</output>
+                  </div>
+                  <input
+                    type="range"
+                    id="sim-horizon"
+                    name="horizon"
+                    min="1"
+                    max="24"
+                    step="1"
+                    value="12"
+                  />
+                  <span class="control__hint" id="sim-horizon-hint">
+                    Months of simulation
+                  </span>
+                </div>
+
+                <div class="control">
+                  <div class="control__top">
+                    <label class="control__label" for="sim-shock">Sales shock</label>
+                    <output class="control__value" id="sim-shock-out" for="sim-shock">0%</output>
+                  </div>
+                  <input
+                    type="range"
+                    id="sim-shock"
+                    name="sales_shock_pct"
+                    min="-40"
+                    max="40"
+                    step="1"
+                    value="0"
+                  />
+                  <span class="control__hint">Demand shock applied to the forecast, −40% to +40%</span>
+                </div>
+
+                <fieldset class="control fieldset-reset">
+                  <legend class="control__label">Decision strategy</legend>
+                  <div class="radio-group" id="sim-decision">
+                    <label class="radio-option">
+                      <input type="radio" name="decision" value="auto" checked />
+                      Auto — let the model decide
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="decision" value="hold" />
+                      Hold — keep current headcount
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="decision" value="hire" />
+                      Hire — add headcount now
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="decision" value="conditional" />
+                      Conditional — hire on a sales trigger
+                    </label>
+                  </div>
+                </fieldset>
+
+                <div class="row">
+                  <button class="btn btn--primary" id="sim-run" type="submit">
+                    <svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg>
+                    Run simulation
+                  </button>
+                  <span class="sim-status" id="sim-status" role="status" aria-live="polite"
+                    >Adjust a slider to re-run automatically.</span
+                  >
+                </div>
+              </form>
+            </article>
+
+            <div class="stack">
+              <div class="sim-summary" id="sim-summary"></div>
+
+              <article class="panel">
+                <header class="panel-head">
+                  <h3>Scenario comparison</h3>
+                  <p class="panel-sub">Live output of the simulation for the assumptions on the left.</p>
+                </header>
+                <div class="scenario-grid" id="sim-cards"></div>
+              </article>
+
+              <article class="panel">
+                <header class="panel-head">
+                  <h3>Cumulative margin path</h3>
+                </header>
+                <div class="chart-frame chart-frame--sm">
+                  <canvas
+                    id="chart-sim-cumulative"
+                    role="img"
+                    aria-label="Line chart of cumulative gross margin per scenario in the simulation"
+                  ></canvas>
+                </div>
+              </article>
+
+              <article class="panel">
+                <header class="panel-head">
+                  <h3>Delta vs. best scenario</h3>
+                </header>
+                <div id="sim-delta-table" class="table-wrap"></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================== 5. WORKFORCE ============================ -->
+        <section
+          class="panel-section"
+          id="panel-workforce"
+          role="tabpanel"
+          aria-labelledby="tab-workforce"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Workforce</h2>
+              <p class="section-sub">
+                Individual productivity, staffing history and the point where extra hires stop paying.
+              </p>
+            </div>
+            <span class="run-badge" id="workforce-run-id" hidden>run —</span>
+          </div>
+
+          <div class="grid-3" id="attrition-cards"></div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Headcount timeline</h3>
+                <p class="panel-sub">Active employees per month with joiner and leaver markers.</p>
+              </header>
+              <div class="chart-frame chart-frame--lg">
+                <canvas
+                  id="chart-headcount"
+                  role="img"
+                  aria-label="Area chart of monthly headcount with joiner and leaver markers"
+                ></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Diminishing returns</h3>
+                <p class="panel-sub">
+                  Average sales per employee (line) against average gross margin (bars) by headcount.
+                </p>
+              </header>
+              <div class="chart-frame chart-frame--lg">
+                <canvas
+                  id="chart-diminishing"
+                  role="img"
+                  aria-label="Mixed chart of sales per employee and gross margin by headcount"
+                ></canvas>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Salesperson roster</h3>
+              <p class="panel-sub">Productivity by individual over the analysed period.</p>
+            </header>
+            <div id="roster-table" class="table-wrap"></div>
+          </article>
+        </section>
+
+        <!-- ========================== 6. SENSITIVITY =========================== -->
+        <section
+          class="panel-section"
+          id="panel-sensitivity"
+          role="tabpanel"
+          aria-labelledby="tab-sensitivity"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Sensitivity</h2>
+              <p class="section-sub">
+                How the recommendation reacts to salary, commission and demand uncertainty.
+              </p>
+            </div>
+            <span class="run-badge" id="sensitivity-run-id" hidden>run —</span>
+          </div>
+
+          <div class="grid-3" id="mc-cards"></div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Tornado analysis</h3>
+                <p class="panel-sub">
+                  Gross margin swing for each variable, low versus high setting, relative to the
+                  midpoint.
+                </p>
+              </header>
+              <div class="chart-frame chart-frame--lg">
+                <canvas
+                  id="chart-tornado"
+                  role="img"
+                  aria-label="Horizontal diverging bar chart of gross margin swing per variable"
+                ></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Monte-Carlo distribution</h3>
+                <p class="panel-sub">
+                  Normal approximation synthesised client-side from the reported percentiles and
+                  dispersion — an approximation, not a server-side resample.
+                </p>
+              </header>
+              <div class="chart-frame chart-frame--lg">
+                <canvas
+                  id="chart-montecarlo"
+                  role="img"
+                  aria-label="Histogram approximating the Monte Carlo gross margin distribution"
+                ></canvas>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Salary × commission grid</h3>
+              <p class="panel-sub">
+                Projected gross margin for each salary and commission combination.
+              </p>
+            </header>
+            <div class="heatmap-scroll">
+              <div class="heatmap" id="heatmap" role="table" aria-label="Heatmap of gross margin by salary and commission"></div>
+            </div>
+            <div class="heatmap-scale">
+              <span id="heat-min">—</span>
+              <span class="heatmap-scale__bar" aria-hidden="true"></span>
+              <span id="heat-max">—</span>
+            </div>
+          </article>
+        </section>
+
+        <!-- ========================== 7. METHODOLOGY =========================== -->
+        <section
+          class="panel-section"
+          id="panel-methodology"
+          role="tabpanel"
+          aria-labelledby="tab-methodology"
+          tabindex="-1"
+          hidden
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Methodology</h2>
+              <p class="section-sub">
+                Assumptions, business rules, seasonality profile and detected data anomalies.
+              </p>
+            </div>
+            <span class="run-badge" id="methodology-run-id" hidden>run —</span>
+          </div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Assumptions</h3>
+                <p class="panel-sub">Values used for this analysis run.</p>
+              </header>
+              <div id="assumptions-table" class="table-wrap"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Business assumptions</h3>
+              </header>
+              <div class="stack" id="business-assumptions"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Gross margin formula</h3>
+            </header>
+            <p class="formula" id="margin-formula">
+              Gross Margin = (1 − COGS rate − commission rate) × Sales − salary × employees
+            </p>
+            <p class="panel-sub" id="margin-formula-sub" hidden></p>
+          </article>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Full recommendation</h3>
+              <p class="panel-sub">Narrative returned by the analysis pipeline for this run.</p>
+            </header>
+            <p class="prewrap" id="recommendation-text"></p>
+          </article>
+
+          <div class="grid-2">
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Seasonality profile</h3>
+                <p class="panel-sub">Month-of-year index and the strength of the seasonal effect.</p>
+              </header>
+              <div id="seasonality-table" class="table-wrap"></div>
+            </article>
+
+            <article class="panel">
+              <header class="panel-head">
+                <h3>Detected anomalies</h3>
+                <p class="panel-sub">Months whose sales deviate materially from expectation.</p>
+              </header>
+              <div id="anomalies-table" class="table-wrap"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <header class="panel-head">
+              <h3>Source artifacts</h3>
+              <p class="panel-sub">Server-generated documents for this run.</p>
+            </header>
+            <div class="row" id="artifact-links"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <footer class="app-footer">
+      RevInsight · Store Staffing Analyzer · Built with FastAPI, Statsmodels, scikit-learn &amp;
+      Chart.js
+    </footer>
+
+    <div class="toast-region" id="toast-region" role="status" aria-live="polite"></div>
+
+    <noscript>
+      <div class="banner banner--error noscript-note">
+        <p class="banner__text">
+          This dashboard requires JavaScript. Enable it to view the staffing analysis.
+        </p>
+      </div>
+    </noscript>
+  </body>
+</html>

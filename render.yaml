@@ -1,0 +1,31 @@
+# Render blueprint for RevInsight - Store Staffing Analyzer
+#
+# Deploy with:  render blueprint launch   (or connect the repo in the Render UI)
+# The service exposes the REST API under /api/v1 and the dashboard on /.
+services:
+  - type: web
+    name: revinsight
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn revinsight.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    autoDeploy: false
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: REVINSIGHT_SALARY
+        value: "3.0"
+      - key: REVINSIGHT_COMMISSION
+        value: "0.05"
+      - key: REVINSIGHT_COGS
+        value: "0.50"
+      - key: REVINSIGHT_FORECAST_MONTHS
+        value: "6"
+      - key: REVINSIGHT_SEED
+        value: "42"
+      - key: REVINSIGHT_CORS_ORIGINS
+        value: "*"

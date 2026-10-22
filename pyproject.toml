@@ -1,0 +1,125 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "revinsight"
+version = "2.1.0"
+description = "RevInsight - Store Staffing Analyzer: data-driven retail staffing optimisation (forecasting, financial modelling, workforce analytics, REST API + web dashboard)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Bishwaman Das" }]
+keywords = [
+    "staffing",
+    "retail",
+    "forecasting",
+    "time-series",
+    "analytics",
+    "fastapi",
+    "data-science",
+    "workforce",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: FastAPI",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "pandas>=1.5.0",
+    "numpy>=1.23.0",
+    "matplotlib>=3.6.0",
+    "seaborn>=0.13.0",
+    "scikit-learn>=1.1.0",
+    "statsmodels>=0.13.0",
+    "scipy>=1.9.0",
+    "openpyxl>=3.0.0",
+    "fpdf2>=2.7.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-multipart>=0.0.9",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "httpx>=0.24",
+    "pytest-cov",
+]
+web = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-multipart>=0.0.9",
+]
+
+[project.scripts]
+revinsight = "revinsight.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/bishwamanDas/retail-staffing-optimizer"
+Repository = "https://github.com/bishwamanDas/retail-staffing-optimizer"
+Issues = "https://github.com/bishwamanDas/retail-staffing-optimizer/issues"
+
+# --------------------------------------------------------------------------- #
+# Packaging                                                                    #
+# --------------------------------------------------------------------------- #
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["revinsight*"]
+exclude = [
+    "tests*",
+    "data*",
+    "web*",
+    "output*",
+    "reports*",
+    "runs*",
+    "docs*",
+]
+
+[tool.setuptools.package-data]
+# The package is pure Python: no non-code files need to be shipped in the wheel.
+revinsight = []
+
+# --------------------------------------------------------------------------- #
+# Testing                                                                      #
+# --------------------------------------------------------------------------- #
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-q --strict-markers"
+filterwarnings = [
+    "ignore::DeprecationWarning:statsmodels.*",
+    "ignore::FutureWarning:pandas.*",
+]
+
+# --------------------------------------------------------------------------- #
+# Linting / formatting                                                         #
+# --------------------------------------------------------------------------- #
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"revinsight/api/*" = ["B008"]
+"tests/*" = ["E402"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+

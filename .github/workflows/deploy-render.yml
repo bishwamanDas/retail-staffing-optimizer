@@ -1,0 +1,59 @@
+name: Deploy to Render
+
+# Manual deployment only: run it from the Actions tab ("Run workflow").
+#
+# The workflow runs the test suite first and only then pings the Render
+# deploy hook, so a broken build is never promoted to production.
+#
+# REQUIRED SECRET
+# --------------
+# RENDER_DEPLOY_HOOK_URL - the "Deploy Hook" URL of the Render service
+# (Dashboard > your service > Deploys > Deploy Hook).  If the secret is not
+# configured the deploy step is skipped with a warning instead of failing.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Render environment to deploy"
+        required: false
+        default: "production"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Test and trigger the Render deploy hook
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'production' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run test suite
+        run: pytest tests/ -v --cov=revinsight --cov-report=term-missing
+
+      - name: Trigger the Render deploy hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "::warning::RENDER_DEPLOY_HOOK_URL is not configured - skipping the deploy trigger."
+            echo "Add it under Settings > Secrets and variables > Actions."
+            exit 0
+          fi
+          echo "Triggering Render deploy hook..."
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+          echo "Render deploy hook triggered successfully."

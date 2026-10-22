@@ -1,0 +1,17 @@
+# RevInsight - Store Staffing Analyzer
+# Development dependencies: runtime deps + test, coverage and lint tooling.
+#
+# Install with:   pip install -r requirements-dev.txt
+#
+# Equivalent to:  pip install -e ".[dev]"
+
+-r requirements.txt
+
+# Testing
+pytest>=7.0
+pytest-cov>=4.0
+httpx>=0.24
+
+# Linting / formatting
+ruff>=0.4
+black>=24.0

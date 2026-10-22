@@ -1,3 +1,15 @@
+# RevInsight - Store Staffing Analyzer
+# Runtime dependencies for the analysis engine, the REST API and the web dashboard.
+#
+# Install with:   pip install -r requirements.txt
+#
+# For the test/lint tooling (pytest, pytest-cov, httpx, ruff, black) use
+# requirements-dev.txt instead, which includes this file via "-r requirements.txt".
+#
+# The authoritative dependency list lives in pyproject.toml; this file mirrors
+# it so that platforms without PEP 621 support (e.g. some PaaS build packs)
+# can still install the project.
+
 pandas>=1.5.0
 numpy>=1.23.0
 matplotlib>=3.6.0
@@ -7,3 +19,9 @@ statsmodels>=0.13.0
 scipy>=1.9.0
 openpyxl>=3.0.0
 fpdf2>=2.7.0
+
+# Web tier (FastAPI application + static dashboard)
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+pydantic>=2.0.0

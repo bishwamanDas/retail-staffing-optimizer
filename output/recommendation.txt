@@ -1,112 +1,153 @@
-========================================================================
-  REVINSIGHT -- BRANDED-CLOTHING STORE STAFFING RECOMMENDATION
-========================================================================
-  Generated: 2026-06-22 23:15:25
+==============================================================================
+  REVINSIGHT - REVI-TEST STAFFING RECOMMENDATION
+==============================================================================
+  Generated : 2026-10-22 16:56:53
+  Dataset   : RevI-Test (81 months, 16 salespersons)
 
-------------------------------------------------------------------------
+  Hire Immediately (8 from month 1) - moving from 7 to 8 heads adds Rs.8.08 L of gross margin over the next 6 months versus leaving the vacancy unfilled.
+
+------------------------------------------------------------------------------
   1. EXECUTIVE SUMMARY
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   Current staff count       : 7
   Recommended action        : Hire Immediately (8 from month 1)
-  Avg monthly sales (Lakhs) : Rs.103.40
-  Avg monthly margin (Lakhs): Rs.25.42
+  Confidence level          : MEDIUM
+  Runner-up option          : Scenario D: Conditional Hire (trigger >= 114.09 L sales)
+  Avg monthly sales (Lakhs) : Rs.103.40 L
+  Avg monthly margin (Lakhs): Rs.25.42 L
+  Optimal headcount         : 9
+  Controlled marginal sales : Rs.11.25 L per additional employee
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   2. FINANCIAL HIGHLIGHTS
-------------------------------------------------------------------------
-  Best monthly margin       : Rs.44.35 Lakhs
-  Worst monthly margin      : Rs.1.39 Lakhs
-  Sales variability (std)   : Rs.27.58 Lakhs
-  Break-even sales/employee : Rs.6.67 Lakhs
+------------------------------------------------------------------------------
+  Best monthly margin       : Rs.44.35 L
+  Worst monthly margin      : Rs.1.39 L
+  Sales variability (std)   : Rs.27.58 L
+  Break-even sales/employee : Rs.6.67 L
+  Avg sales per employee    : Rs.14.69 L
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   3. FORECAST OUTLOOK
-------------------------------------------------------------------------
-  Selected model            : Exponential Smoothing
-  Validation RMSE           : Rs.10.79 Lakhs
+------------------------------------------------------------------------------
+  Selected model            : Ensemble (Top 3)
+  Validation RMSE           : Rs.8.02 L
+  Validation MAPE           : 5.95 %
   Forecast horizon          : 6 months
-  Forecast avg sales (Lakhs): Rs.109.51
+  Forecast avg sales (Lakhs): Rs.107.43 L
+  95% interval (month 1)    : Rs.98.66 L to Rs.132.36 L
+  95% interval (month 6)    : Rs.51.88 L to Rs.85.58 L
 
-  Model selection reasoning:
-    Validation RMSE (last 12 months):
-      • Exponential Smoothing: 10.79 Lakhs ← best
-      • Moving Average: 20.21 Lakhs
-      • Linear Regression: 24.79 Lakhs
-    
-    'Exponential Smoothing' achieved the lowest RMSE and was selected for the final 6-month forecast.
+  Ensemble composition:
+    - Holt-Winters: 43% weight (RMSE Rs.9.40 L)
+    - Seasonal Naive: 38% weight (RMSE Rs.10.58 L)
+    - Holt (Damped Trend): 19% weight (RMSE Rs.20.70 L)
 
-------------------------------------------------------------------------
+  Method: Rolling-origin cross-validation (4 origins x 6-month horizon); final model(s) re-fitted on all 81 observations; prediction interval from a 2,000-draw residual bootstrap.
+
+------------------------------------------------------------------------------
   4. STAFFING RECOMMENDATION
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   Recommended action        : Hire Immediately (8 from month 1)
   Confidence level          : MEDIUM
-  Runner-up option          : Scenario D: Conditional Hire (trigger ≥ 116.18 L sales)
+  Runner-up option          : Scenario D: Conditional Hire (trigger >= 114.09 L sales)
 
   Reasoning:
-    - Historical avg sales/employee: ₹14.64 L (CV = 0.25).
+    - Historical avg sales/employee: Rs.14.64 L (CV = 0.25).
     - Diminishing returns detected; optimal headcount by margin/employee is 7.
-    - Scenario B (Hire Immediately (8 from month 1)) yields the highest 6-month gross margin at ₹187.94 L, which is ₹0.00 L more than runner-up Scenario D.
-    - Most recent month (Month 81): 7 active employees, ₹69.61 L sales.
+    - Scenario B (Hire Immediately (8 from month 1)) yields the highest 6-month gross margin at Rs.172.13 L, which is Rs.0.00 L more than runner-up Scenario D and Rs.8.08 L more than not hiring at all.
+    - Most recent month (Month 81): 7 active employees, Rs.69.61 L sales.
 
   Expected 6-Month Impact:
-    Total Sales 6M                     : Rs.737.64 Lakhs
-    Total Gross Margin 6M              : Rs.187.94 Lakhs
-    Total Staff Cost 6M                : Rs.180.88 Lakhs
-    Avg Monthly Margin                 : Rs.31.32 Lakhs
-    Margin Advantage Over Runner Up    : Rs.0.00 Lakhs
+    Total Sales 6M                        : Rs.702.52 L
+    Total Gross Margin 6M                 : Rs.172.13 L
+    Total Staff Cost 6M                   : Rs.179.13 L
+    Avg Monthly Margin                    : Rs.28.69 L
+    Margin Advantage Over Runner Up       : Rs.0.00 L
+    Margin Advantage Vs Do Nothing        : Rs.8.08 L
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   5. SCENARIO COMPARISON
-------------------------------------------------------------------------
-  Scenario A — Don't Hire (Stay at 7)
-    6-Month Gross Margin    : Rs.169.68 Lakhs
+------------------------------------------------------------------------------
+  Scenario A - Don't Hire (Stay at 7)
+    6-Month Gross Margin  : Rs.164.06 L
+    Difference vs best     : Rs.-8.08 L
+    P(beats do-nothing)    : 50 %
     Risk                    : LOW financial risk but HIGH operational risk. Existing staff may burn out; customer service quality could decline during peak months.
-  Scenario B — Hire Immediately (8 from month 1)
-    6-Month Gross Margin    : Rs.187.94 Lakhs
-    Risk                    : MODERATE risk. Higher fixed cost from day one, but the new hire ramps up productivity over ~5 months. If sales dip, margins shrink.
-  Scenario C — Hire After 2 Months
-    6-Month Gross Margin    : Rs.180.21 Lakhs
+  Scenario B - Hire Immediately (8 from month 1)
+    6-Month Gross Margin  : Rs.172.13 L
+    Difference vs best     : Rs.0.00 L
+    P(beats do-nothing)    : 73 %
+    Risk                    : MODERATE risk. Higher fixed cost from day one, but the new hire ramps up productivity over 6 months. If sales dip, margins shrink.
+  Scenario C - Hire After 2 Months
+    6-Month Gross Margin  : Rs.168.26 L
+    Difference vs best     : Rs.-3.87 L
+    P(beats do-nothing)    : 62 %
     Risk                    : LOW-MODERATE risk. Saves 2 months of extra salary while still bringing a new hire on board before peak season pressure builds.
-  Scenario D — Conditional Hire (trigger ≥ 116.18 L sales)
-    6-Month Gross Margin    : Rs.187.94 Lakhs
+  Scenario D - Conditional Hire (trigger >= 114.09 L sales)
+    6-Month Gross Margin  : Rs.172.13 L
+    Difference vs best     : Rs.0.00 L
+    P(beats do-nothing)    : 73 %
     Risk                    : LOW risk. Data-driven decision minimises cost if sales are weak, but may result in delayed hiring when the market picks up.
 
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
   6. RECOMMENDED BUSINESS RULE
-------------------------------------------------------------------------
-  Adaptive Staffing Rule: Maintain a 3-month rolling average of sales per employee. If the rolling average exceeds ₹16.48 L, hire one additional employee. If it falls between ₹12.79 L and ₹16.48 L, hold current headcount and replace departures. If it drops below ₹12.79 L, do NOT replace departing staff. Optimal target headcount based on historical margins: 7 employees.
+------------------------------------------------------------------------------
+  Adaptive Staffing Rule: Maintain a 3-month rolling average of sales per employee. If the rolling average exceeds Rs.16.48 L, hire one additional employee. If it falls between Rs.12.79 L and Rs.16.48 L, hold current headcount and replace departures. If it drops below Rs.12.79 L, do NOT replace departing staff. Optimal target headcount based on historical margins: 7 employees.
 
-  Why this is better than 'always replace':
-    - The 'always replace' rule ignores current sales levels.  During low-sales months the extra salary erodes margin.
-    - The adaptive rule ties staffing decisions to actual revenue performance, avoiding unnecessary costs in lean months and scaling up when the market supports it.
-    - Based on historical data, the adaptive rule would have avoided overstaffing in ~25 % of months, saving an estimated ₹3.0 L per avoided hire per month.
+  Backtested against 'always replace':
+    - Replaying both policies over 81 months, the adaptive rule produced Rs.3.00 L of gross margin (0.1%) more than always replacing, and avoided overstaffing in 17 month(s) (21 % of the period).
 
-------------------------------------------------------------------------
-  7. BUSINESS ASSUMPTIONS
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
+  7. RISK & SENSITIVITY
+------------------------------------------------------------------------------
+  Drivers of the margin outcome (most material first):
+    1. Sales volume
+    2. Monthly salary
+    3. COGS rate
+    4. Commission rate
+
+  Monte-Carlo margin distribution:
+    P10 / P50 / P90          : Rs.130.12 L / Rs.146.13 L / Rs.162.37 L
+    P(margin > 0)           : 100 %
+
+  Payback on the recommended hire: 1.0 month(s); ROI 44.9 %.
+
+------------------------------------------------------------------------------
+  8. WORKFORCE INSIGHTS
+------------------------------------------------------------------------------
+  Total leavers (historical): 9
+  Average tenure of leavers : 39.8 months
+  Leavers in last 12 months : 1
+  Anomalous months detected : 1
+
+------------------------------------------------------------------------------
+  9. BUSINESS ASSUMPTIONS
+------------------------------------------------------------------------------
     - Customer traffic remains stable.
     - No significant hiring/recruitment costs are incurred.
-    - No training period productivity loss beyond the modelled ramp-up.
+    - No training-period productivity loss beyond the modelled ramp-up (70% -> 100% over 6 months).
     - Monthly salary stays fixed at Rs. 3.0 Lakhs per employee.
     - Commission remains fixed at 5.0% of total sales.
+    - Cost of goods sold stays at 50% of sales.
     - Economic conditions and consumer demand remain similar.
-    - No major competitor entry or exit in the mall.
-    - Store operating hours and mall footfall remain unchanged.
-    - Branded clothing pricing strategy remains consistent.
+    - No major competitor entry or exit during the projection period.
+    - Store operating hours and footfall remain unchanged.
+    - The pricing and assortment strategy remains consistent.
 
-------------------------------------------------------------------------
-  8. METHODOLOGY NOTES
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
+  10. METHODOLOGY NOTES
+------------------------------------------------------------------------------
   - All monetary values are in Lakhs INR.
   - Salesperson productivity is measured as individual revenue
     contribution relative to total monthly sales.
-  - Forecasts are generated using time-series models trained on
-    historical monthly sales data (Moving Average, Exponential
-    Smoothing, Linear Regression) with automatic model selection
-    based on validation RMSE.
+  - Forecasts use rolling-origin (walk-forward) cross-validation
+    across a 7-model zoo; the top performers are blended with
+    inverse-RMSE weights.
+  - Prediction intervals come from an empirical residual bootstrap,
+    so they widen with the forecast horizon.
   - Staffing recommendations consider seasonality, forecast
-    demand, diminishing returns analysis, and per-employee
-    efficiency metrics.
-  - Scenario analysis includes new-hire ramp-up productivity
-    curve (70% -> 100% over 6 months).
-========================================================================
+    demand, diminishing returns and per-employee efficiency.
+  - Scenario analysis includes a new-hire ramp-up curve
+    (70% -> 100% over 6 months) and a probabilistic margin band.
+==============================================================================

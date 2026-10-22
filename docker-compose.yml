@@ -1,0 +1,47 @@
+# RevInsight - Store Staffing Analyzer
+#
+# Usage:
+#   docker compose up --build        # start the app on http://localhost:8000
+#   docker compose down -v           # stop and remove the named volumes
+#
+# The Compose file format v2 no longer needs a top-level "version" key.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: revinsight:latest
+    container_name: revinsight-web
+    ports:
+      - "8000:8000"
+    environment:
+      REVINSIGHT_SALARY: "3.0"
+      REVINSIGHT_COMMISSION: "0.05"
+      REVINSIGHT_COGS: "0.50"
+      REVINSIGHT_FORECAST_MONTHS: "6"
+      REVINSIGHT_SEED: "42"
+      REVINSIGHT_CORS_ORIGINS: "*"
+      PORT: "8000"
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      # Bundled sample datasets are mounted read-only.
+      - ./data:/app/data:ro
+      # Persisted analysis runs (charts, reports, CSV exports) across restarts.
+      - revinsight_runs:/app/runs
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request,sys; r=urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=4); sys.exit(0 if r.status == 200 else 1)",
+        ]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  revinsight_runs:

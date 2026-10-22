@@ -1,23 +1,106 @@
-# Byte-compiled / optimized / DLL files
+# =============================================================================
+# RevInsight - Store Staffing Analyzer
+# =============================================================================
+
+# --------------------------------------------------------------------------- #
+# Byte-compiled / optimised / DLL files
+# --------------------------------------------------------------------------- #
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 
-# Output and Reports
-# Note: Uncomment these if you want to push the generated outputs to GitHub
-# output/
-# reports/
+# --------------------------------------------------------------------------- #
+# Distribution / packaging
+# --------------------------------------------------------------------------- #
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
 
-# Virtual Environments
+# --------------------------------------------------------------------------- #
+# Virtual environments
+# --------------------------------------------------------------------------- #
+.venv/
 venv/
 env/
 ENV/
-.venv/
 
+# --------------------------------------------------------------------------- #
+# Test, coverage and lint caches
+# --------------------------------------------------------------------------- #
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# --------------------------------------------------------------------------- #
+# Generated runtime artefacts
+#
+# The sample outputs for the bundled dataset ARE tracked, so a reviewer can
+# browse the generated charts, the CSV export, the text report and the PDF
+# without running anything.  Everything the API produces at runtime is not.
+#
+#   runs/      analysis runs created by the API
+#   charts/    charts written to the current working directory
+# --------------------------------------------------------------------------- #
+output/*
+!output/.gitkeep
+!output/*.csv
+!output/*.txt
+!output/charts/
+!output/charts/*.png
+reports/*
+!reports/.gitkeep
+!reports/*.pdf
+!reports/*.html
+runs/
+
+# Charts written to the current working directory when the pipeline is
+# invoked without an explicit output directory.  Anchored to the repo
+# root so it does not also match output/charts/.
+/charts/
+
+# --------------------------------------------------------------------------- #
+# Secrets and local configuration
+# --------------------------------------------------------------------------- #
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --------------------------------------------------------------------------- #
+# Logs
+# --------------------------------------------------------------------------- #
+*.log
+logs/
+
+# --------------------------------------------------------------------------- #
+# Node tooling (the dashboard is static, but keep the workspace clean)
+# --------------------------------------------------------------------------- #
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# --------------------------------------------------------------------------- #
 # IDEs
-.vscode/
+# --------------------------------------------------------------------------- #
 .idea/
+.vscode/
+*.swp
 
-# OS Files
+# --------------------------------------------------------------------------- #
+# OS files
+# --------------------------------------------------------------------------- #
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# NOTE: data/ and docs/ are intentionally tracked - they hold the sample
+# datasets and the API contract documentation.
