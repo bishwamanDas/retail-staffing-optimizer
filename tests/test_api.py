@@ -109,6 +109,23 @@ class TestAnalysisLifecycle:
         assert response.status_code == 201
         assert response.json()["dataset"]["name"] == "uploaded"
 
+    def test_create_run_with_empty_upload(self, client: TestClient) -> None:
+        response = client.post(
+            "/api/v1/analyses",
+            files={"file": ("empty.csv", "", "text/csv")},
+            data={"salary": 3.0, "commission": 0.05},
+        )
+        assert response.status_code == 422
+        assert "empty" in response.json()["detail"].lower()
+
+    def test_create_run_with_corrupted_csv(self, client: TestClient) -> None:
+        response = client.post(
+            "/api/v1/analyses",
+            files={"file": ("bad.csv", "invalid,header\n1,2", "text/csv")},
+            data={"salary": 3.0, "commission": 0.05},
+        )
+        assert response.status_code == 422
+
     def test_create_run_with_invalid_upload(self, client: TestClient) -> None:
         response = client.post(
             "/api/v1/analyses",
