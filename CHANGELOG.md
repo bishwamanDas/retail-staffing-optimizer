@@ -7,8 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-10-22
+
 ### Added
-- Nothing yet.
+- **Production security headers**: added `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, and `X-Process-Time` latency headers.
+- **Pipeline benchmarking suite**: added `store_staffing.benchmarks` and `python run.py benchmark` CLI command to profile execution times across pipeline stages.
+- **Pre-commit hooks**: added `.pre-commit-config.yaml` with Ruff, Black, and YAML validation hooks.
+- **Architecture Decision Records**: added ADR 0001 (walk-forward CV) and ADR 0002 (first-difference OLS).
+- **Contributing guide**: added comprehensive `CONTRIBUTING.md` guide for local setup and testing.
+- **Network connection listeners**: added real-time online/offline event handlers and toasts in dashboard.
+- **Enhanced test suite**: added unit test coverage for security headers, financial edge cases, anomaly boundaries, and file uploads.
+- **Print media stylesheet**: added optimized `@media print` rules for clean report printing from the browser.
 
 ## [2.1.0] - 2026-10-22
 
