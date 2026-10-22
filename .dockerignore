@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# RevInsight - Docker build context exclusions
+# Store Staffing Analyzer - Docker build context exclusions
 # Keeps the build context small and prevents host artefacts leaking into the
 # image.  Note: data/ and web/ are intentionally NOT ignored - the API needs
 # the bundled datasets and the static dashboard at runtime.

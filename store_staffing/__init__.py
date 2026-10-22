@@ -1,26 +1,26 @@
-"""RevInsight — Store Staffing Analytics.
+"""Store Staffing Analyzer — retail staffing analytics.
 
 A data-driven staffing optimisation engine for retail stores.
 
 The package is organised in layers:
 
-``revinsight.config``
-    Business + modelling assumptions (:class:`~revinsight.config.AnalysisConfig`).
-``revinsight.utils``
+``store_staffing.config``
+    Business + modelling assumptions (:class:`~store_staffing.config.AnalysisConfig`).
+``store_staffing.utils``
     Data loading, validation and aggregation helpers.
-``revinsight.forecasting``
+``store_staffing.forecasting``
     Model zoo with walk-forward validation, ensembling and intervals.
-``revinsight.financial_analysis``
+``store_staffing.financial_analysis``
     Gross margin, break-even, sensitivity and payback analytics.
-``revinsight.staffing_model``
+``store_staffing.staffing_model``
     Productivity, diminishing returns and scenario optimisation.
-``revinsight.seasonality`` / ``revinsight.anomaly`` / ``revinsight.people``
+``store_staffing.seasonality`` / ``store_staffing.anomaly`` / ``store_staffing.people``
     Calendar structure, anomaly detection and workforce analytics.
-``revinsight.pipeline``
+``store_staffing.pipeline``
     End-to-end orchestration returning a JSON-serialisable result.
-``revinsight.api``
+``store_staffing.api``
     FastAPI application exposing the analytics engine over HTTP.
-``revinsight.cli``
+``store_staffing.cli``
     Command-line entry point.
 """
 

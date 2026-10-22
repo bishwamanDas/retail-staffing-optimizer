@@ -1,7 +1,7 @@
-"""Backwards-compatible facade over the RevInsight analysis pipeline.
+"""Backwards-compatible facade over the Store Staffing Analyzer analysis pipeline.
 
 .. deprecated::
-    Use :func:`revinsight.pipeline.run_analysis` directly.  This module is
+    Use :func:`store_staffing.pipeline.run_analysis` directly.  This module is
     kept so that existing notebooks and scripts that imported
     ``analyze_store`` continue to work.
 """
@@ -52,7 +52,7 @@ def run_full_analysis(
     start_month: int = 1,
     generate_artifacts: bool = True,
 ) -> dict[str, Any]:
-    """Execute the complete RevInsight analysis pipeline.
+    """Execute the complete Store Staffing Analyzer analysis pipeline.
 
     Parameters
     ----------

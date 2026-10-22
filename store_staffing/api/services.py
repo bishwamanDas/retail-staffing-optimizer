@@ -1,8 +1,8 @@
-"""Service layer for the RevInsight REST API.
+"""Service layer for the Store Staffing Analyzer REST API.
 
 Owns the analysis run registry: dataset discovery, run execution, cached
 artefact paths and the what-if simulator.  The FastAPI layer in
-:mod:`revinsight.api.main` only handles HTTP concerns and delegates all
+:mod:`store_staffing.api.main` only handles HTTP concerns and delegates all
 business logic here.
 """
 

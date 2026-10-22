@@ -1,8 +1,8 @@
-"""Robust anomaly detection and structural-break analysis for RevInsight.
+"""Robust anomaly detection and structural-break analysis for Store Staffing Analyzer.
 
 The module works on the *deseasonalised* view of the store's sales so
 that a genuine December spike is not mistaken for an anomaly.  When a
-decomposition produced by :func:`revinsight.seasonality.decompose_series`
+decomposition produced by :func:`store_staffing.seasonality.decompose_series`
 is available, the residuals are scored; otherwise the raw monthly sales
 are scored directly.
 
@@ -189,7 +189,7 @@ def _seasonal_index(
     Parameters
     ----------
     decomposition : dict or None
-        Output of :func:`revinsight.seasonality.decompose_series`.
+        Output of :func:`store_staffing.seasonality.decompose_series`.
     month_of_year : np.ndarray
         Calendar month (1-12) of every observation.
     n : int
@@ -299,7 +299,7 @@ def detect_anomalies(
     """Detect unusual months using a robust z-score.
 
     When *decomposition* is supplied (the output of
-    :func:`revinsight.seasonality.decompose_series`) the **residual**
+    :func:`store_staffing.seasonality.decompose_series`) the **residual**
     component is scored, so recurring seasonal effects are removed
     before the outliers are looked for.  Without a decomposition the
     raw monthly sales are scored instead.
@@ -308,7 +308,7 @@ def detect_anomalies(
     ----------
     summary_df : pd.DataFrame
         Monthly summary as produced by
-        :func:`revinsight.utils.prepare_monthly_summary`.  Must contain
+        :func:`store_staffing.utils.prepare_monthly_summary`.  Must contain
         a ``Sales`` column.
     decomposition : dict, optional
         Seasonal decomposition whose ``residual`` component should be

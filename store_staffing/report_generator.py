@@ -1,7 +1,7 @@
-"""Report rendering for the RevInsight store-staffing analytics engine.
+"""Report rendering for the Store Staffing Analyzer analytics engine.
 
 The module turns the v2.0 analysis payload produced by
-:func:`revinsight.pipeline.run_analysis` into two board-ready artefacts:
+:func:`store_staffing.pipeline.run_analysis` into two board-ready artefacts:
 
 * a paginated **PDF** report built with ``fpdf2`` (cover page, table of
   contents and ten analytical sections plus appendices), and
@@ -48,8 +48,8 @@ __all__ = ["generate_pdf_report", "generate_html_report"]
 # --------------------------------------------------------------------------- #
 # Branding & layout constants                                                  #
 # --------------------------------------------------------------------------- #
-_PRODUCT: str = "RevInsight"
-_SUBTITLE: str = "Store Staffing Analysis"
+_PRODUCT: str = "Store Staffing Analyzer"
+_SUBTITLE: str = "Retail Staffing Analysis"
 _RUPEE: str = "Rs."
 _LAKHS: str = "L"
 _NA: str = "n/a"
@@ -2253,7 +2253,7 @@ def _optimise_images(paths: Sequence[str]) -> dict[str, str]:
             total / 1_048_576.0,
         )
         return mapping
-    temp_dir = tempfile.mkdtemp(prefix="revinsight_charts_")
+    temp_dir = tempfile.mkdtemp(prefix="store_staffing_charts_")
     for path in paths:
         try:
             with Image.open(path) as image:
@@ -2500,7 +2500,7 @@ def _build_view_model(
 # PDF rendering                                                                #
 # --------------------------------------------------------------------------- #
 class _ReportPDF(FPDF):
-    """FPDF subclass carrying the RevInsight branding."""
+    """FPDF subclass carrying the Store Staffing Analyzer branding."""
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialise the document and the page geometry.
@@ -3203,7 +3203,7 @@ def _pdf_cover(pdf: _ReportPDF, meta: dict[str, Any]) -> None:
     _pdf_write_paragraph(
         pdf,
         "All monetary values are in Lakhs INR. This report was generated "
-        "automatically by the RevInsight analytics engine; every figure is "
+        "automatically by the Store Staffing Analyzer analytics engine; every figure is "
         "read directly from the analysis payload.",
         size=_FONT_SIZE_SMALL,
         color=_COLOR_MUTED,
@@ -3263,7 +3263,7 @@ def _render_pdf(
     pdf.alias_nb_pages()
     pdf.set_title(f"{_PRODUCT} - {_SUBTITLE}")
     pdf.set_author(f"{_PRODUCT} Analytics")
-    pdf.set_creator("RevInsight report_generator")
+    pdf.set_creator("Store Staffing Analyzer report_generator")
     pdf.set_subject("Store staffing analysis report")
     pdf.meta = {
         "dataset": str(meta.get("dataset", "")),
@@ -3751,13 +3751,13 @@ def generate_pdf_report(
     salary: float = 3.0,
     commission: float = 0.05,
 ) -> str:
-    """Generate the RevInsight PDF report from an analysis payload.
+    """Generate the Store Staffing Analyzer PDF report from an analysis payload.
 
     Parameters
     ----------
     all_results : dict
         The v2.0 analysis payload produced by
-        :func:`revinsight.pipeline.run_analysis`.
+        :func:`store_staffing.pipeline.run_analysis`.
     summary_df : pd.DataFrame
         The monthly summary (``Month``, ``Sales``, ``ActiveEmployees``,
         ``SalesPerEmployee``, ``GrossMargin``).
@@ -3803,7 +3803,7 @@ def generate_html_report(
     output_path: str,
     charts_dir: str = "",
 ) -> str:
-    """Generate the RevInsight HTML report from an analysis payload.
+    """Generate the Store Staffing Analyzer HTML report from an analysis payload.
 
     The result is a single, self-contained, responsive, dark-themed HTML
     file.  Charts are embedded as base64 data URIs so the document can be
@@ -3813,7 +3813,7 @@ def generate_html_report(
     ----------
     results : dict
         The v2.0 analysis payload produced by
-        :func:`revinsight.pipeline.run_analysis`.
+        :func:`store_staffing.pipeline.run_analysis`.
     output_path : str
         Full path of the HTML file to write.
     charts_dir : str, optional

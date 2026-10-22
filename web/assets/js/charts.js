@@ -1,5 +1,5 @@
 /**
- * RevInsight — Chart.js builders.
+ * Store Staffing Analyzer — Chart.js builders.
  *
  * Every builder is a pure function of `(canvas, data)` returning a Chart
  * instance. If the Chart.js CDN is unreachable the module degrades to a
@@ -501,7 +501,7 @@ export function buildForecastChart(canvas, data) {
     },
     plugins: [
       {
-        id: 'revInsightBaseline',
+        id: 'storeStaffingBaseline',
         beforeDatasetsDraw(chart) {
           const { ctx, chartArea, scales } = chart;
           if (!chartArea || !scales.y) return;
@@ -1146,7 +1146,7 @@ export function buildMonteCarloChart(canvas, data) {
             },
           },
         }),
-        revInsightVLines: { lines: verticalLines },
+        storeStaffingVLines: { lines: verticalLines },
       },
       interaction: { mode: 'nearest', axis: 'x', intersect: false },
     },
@@ -1159,9 +1159,9 @@ export function buildMonteCarloChart(canvas, data) {
 /* -------------------------------------------------------------------------- */
 
 const verticalLinesPlugin = {
-  id: 'revInsightVLines',
+  id: 'storeStaffingVLines',
   afterDatasetsDraw(chart) {
-    const options = chart.options.plugins && chart.options.plugins.revInsightVLines;
+    const options = chart.options.plugins && chart.options.plugins.storeStaffingVLines;
     const lines = options && options.lines;
     if (!lines || !lines.length) return;
 

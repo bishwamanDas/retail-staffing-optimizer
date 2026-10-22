@@ -125,9 +125,7 @@ def build_recommendation_text(
     # Header                                                              #
     # ------------------------------------------------------------------ #
     lines.append(_rule("="))
-    lines.append(
-        f"  REVINSIGHT - {str(dataset.get('name', 'STORE')).upper()} STAFFING RECOMMENDATION"
-    )
+    lines.append(f"  {str(dataset.get('name', 'STORE')).upper()} - STAFFING RECOMMENDATION")
     lines.append(_rule("="))
     lines.append(f"  Generated : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     lines.append(

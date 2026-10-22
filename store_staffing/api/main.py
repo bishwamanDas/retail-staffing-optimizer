@@ -1,11 +1,11 @@
-"""FastAPI application exposing the RevInsight analytics engine.
+"""FastAPI application exposing the Store Staffing Analyzer analytics engine.
 
 The API is versioned under ``/api/v1`` and serves the web dashboard from
 the same origin, so the whole product deploys as a single process.
 
 Run it with::
 
-    uvicorn revinsight.api.main:app --host 0.0.0.0 --port 8000
+    uvicorn store_staffing.api.main:app --host 0.0.0.0 --port 8000
 """
 
 from __future__ import annotations
@@ -82,7 +82,7 @@ def create_app(project_root: str | Path | None = None) -> FastAPI:
     root = Path(project_root) if project_root else PROJECT_ROOT
 
     application = FastAPI(
-        title="RevInsight Analytics API",
+        title="Store Staffing Analyzer Analytics API",
         description=(
             "Data-driven retail staffing optimisation: forecasting, "
             "financial modelling, scenario analysis and workforce analytics."
@@ -95,7 +95,7 @@ def create_app(project_root: str | Path | None = None) -> FastAPI:
 
     application.add_middleware(
         CORSMiddleware,
-        allow_origins=os.environ.get("REVINSIGHT_CORS_ORIGINS", "*").split(","),
+        allow_origins=os.environ.get("SSA_CORS_ORIGINS", "*").split(","),
         allow_credentials=False,
         allow_methods=["*"],
         allow_headers=["*"],

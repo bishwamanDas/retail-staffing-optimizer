@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with RevInsight
+about: Report a problem with Store Staffing Analyzer
 title: "[Bug] "
 labels: bug
 assignees: ""
@@ -21,7 +21,7 @@ What you expected to happen.
 What actually happened (include the full traceback or error message).
 
 **Environment**
-- RevInsight version: `2.0.0`
+- Store Staffing Analyzer version: `2.1.0`
 - Python version:
 - OS:
 - Deployment: local / Docker / Render / Fly.io / other

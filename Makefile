@@ -1,5 +1,5 @@
 # =============================================================================
-# RevInsight - Store Staffing Analyzer
+# Store Staffing Analyzer
 #
 # Developer convenience targets.  Run `make help` for the full list.
 # Recipe lines below MUST start with a real tab character.
@@ -11,12 +11,12 @@ PYTHON  ?= python
 PIP     ?= $(PYTHON) -m pip
 COMPOSE ?= docker compose
 DATA    ?= data/RevI-Test.csv
-IMAGE   ?= revinsight:latest
+IMAGE   ?= store_staffing:latest
 
 .PHONY: help install install-prod run serve test lint format docker-build docker-run clean
 
 help: ## Show this help message
-	@echo "RevInsight - Store Staffing Analyzer"
+	@echo "Store Staffing Analyzer"
 	@echo ""
 	@echo "Usage: make <target>"
 	@echo ""
@@ -33,18 +33,18 @@ run: ## Run the analysis pipeline on the sample dataset
 	$(PYTHON) run.py $(DATA)
 
 serve: ## Start the FastAPI app and web dashboard with auto-reload
-	$(PYTHON) -m uvicorn revinsight.api.main:app --reload --port 8000
+	$(PYTHON) -m uvicorn store_staffing.api.main:app --reload --port 8000
 
 test: ## Run the test suite
 	$(PYTHON) -m pytest
 
 lint: ## Lint with ruff and verify formatting with black
-	$(PYTHON) -m ruff check revinsight/
-	$(PYTHON) -m black --check revinsight/ --line-length 100
+	$(PYTHON) -m ruff check store_staffing/
+	$(PYTHON) -m black --check store_staffing/ --line-length 100
 
 format: ## Auto-format the code with black and fix lint issues with ruff
-	$(PYTHON) -m black revinsight/ --line-length 100
-	$(PYTHON) -m ruff check --fix revinsight/
+	$(PYTHON) -m black store_staffing/ --line-length 100
+	$(PYTHON) -m ruff check --fix store_staffing/
 
 docker-build: ## Build the production Docker image
 	docker build -t $(IMAGE) .

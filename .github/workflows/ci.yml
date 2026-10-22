@@ -30,7 +30,7 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Run test suite
-        run: pytest tests/ -v --cov=revinsight --cov-report=term-missing --cov-report=xml
+        run: pytest tests/ -v --cov=store_staffing --cov-report=term-missing --cov-report=xml
 
       - name: Upload coverage to Codecov
         if: ${{ github.repository != 'owner/repo' }}
@@ -38,7 +38,7 @@ jobs:
         with:
           files: ./coverage.xml
           flags: python-${{ matrix.python-version }}
-          name: revinsight-${{ matrix.python-version }}
+          name: store_staffing-${{ matrix.python-version }}
           fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -69,10 +69,10 @@ jobs:
           pip install ruff black
 
       - name: Run ruff
-        run: ruff check revinsight/
+        run: ruff check store_staffing/
 
       - name: Check formatting with black
-        run: black --check revinsight/ --line-length 100
+        run: black --check store_staffing/ --line-length 100
 
   docker:
     name: Docker build
@@ -91,4 +91,4 @@ jobs:
           file: ./Dockerfile
           push: false
           load: true
-          tags: revinsight:ci
+          tags: store_staffing:ci

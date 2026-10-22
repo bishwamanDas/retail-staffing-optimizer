@@ -1,4 +1,4 @@
-# RevInsight Analytics API — Contract v2.0
+# Store Staffing Analyzer API — Contract v2.1
 
 Base URL: `/api/v1` · Content type: `application/json` unless stated.
 

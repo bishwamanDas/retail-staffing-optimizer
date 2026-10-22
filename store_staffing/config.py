@@ -1,8 +1,8 @@
-"""Centralised configuration for the RevInsight analytics engine.
+"""Centralised configuration for the Store Staffing Analyzer analytics engine.
 
 All tunable business assumptions live here so that the CLI, the REST API
 and the web dashboard share a single source of truth.  Values may be
-overridden through environment variables (prefix ``REVINSIGHT_``) or
+overridden through environment variables (prefix ``STORE STAFFING ANALYZER_``) or
 explicit keyword arguments.
 
 Every monetary value is denominated in **Lakhs INR** (1 Lakh = 100,000 INR).
@@ -173,11 +173,11 @@ def config_from_env(**overrides: Any) -> AnalysisConfig:
 
     Recognised variables (all optional):
 
-    * ``REVINSIGHT_SALARY`` — monthly salary per employee (Lakhs).
-    * ``REVINSIGHT_COMMISSION`` — commission rate as a fraction.
-    * ``REVINSIGHT_COGS`` — cost of goods sold rate.
-    * ``REVINSIGHT_FORECAST_MONTHS`` — forecast horizon.
-    * ``REVINSIGHT_SEED`` — random seed for Monte-Carlo sampling.
+    * ``SSA_SALARY`` — monthly salary per employee (Lakhs).
+    * ``SSA_COMMISSION`` — commission rate as a fraction.
+    * ``SSA_COGS`` — cost of goods sold rate.
+    * ``SSA_FORECAST_MONTHS`` — forecast horizon.
+    * ``SSA_SEED`` — random seed for Monte-Carlo sampling.
 
     Parameters
     ----------
@@ -190,11 +190,11 @@ def config_from_env(**overrides: Any) -> AnalysisConfig:
         A validated configuration object.
     """
     cfg = AnalysisConfig(
-        salary_per_employee=_env_float("REVINSIGHT_SALARY", DEFAULT_CONFIG.salary_per_employee),
-        commission_rate=_env_float("REVINSIGHT_COMMISSION", DEFAULT_CONFIG.commission_rate),
-        cogs_rate=_env_float("REVINSIGHT_COGS", DEFAULT_CONFIG.cogs_rate),
-        forecast_months=_env_int("REVINSIGHT_FORECAST_MONTHS", DEFAULT_CONFIG.forecast_months),
-        random_seed=_env_int("REVINSIGHT_SEED", DEFAULT_CONFIG.random_seed),
+        salary_per_employee=_env_float("SSA_SALARY", DEFAULT_CONFIG.salary_per_employee),
+        commission_rate=_env_float("SSA_COMMISSION", DEFAULT_CONFIG.commission_rate),
+        cogs_rate=_env_float("SSA_COGS", DEFAULT_CONFIG.cogs_rate),
+        forecast_months=_env_int("SSA_FORECAST_MONTHS", DEFAULT_CONFIG.forecast_months),
+        random_seed=_env_int("SSA_SEED", DEFAULT_CONFIG.random_seed),
     )
     cfg = cfg.replace(**overrides)
     cfg.validate()

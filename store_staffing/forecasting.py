@@ -1392,7 +1392,7 @@ def plot_forecast(
     )
 
     ax.set_title(
-        f"RevInsight — Sales Forecast ({model_name}){title_suffix}",
+        f"Store Staffing Analyzer — Sales Forecast ({model_name}){title_suffix}",
         fontsize=14,
         fontweight="bold",
     )

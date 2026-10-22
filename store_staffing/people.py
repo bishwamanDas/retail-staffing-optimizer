@@ -1,4 +1,4 @@
-"""Salesperson cohort, tenure and attrition analysis for RevInsight.
+"""Salesperson cohort, tenure and attrition analysis for Store Staffing Analyzer.
 
 The module reconstructs the store's staffing history from the raw
 monthly sales table.  A salesperson column is treated as a single
@@ -12,7 +12,7 @@ Conventions
 * **Active month** — a month in which the salesperson's individual
   sales are strictly positive.  A zero means the person was not on
   the roster (not yet hired, on leave, or already gone), matching
-  :func:`revinsight.utils.count_active_employees`.
+  :func:`store_staffing.utils.count_active_employees`.
 * **Leaver** — someone who was active at some point and whose final
   active month falls *strictly* before the dataset's last month.
 * **Still active** — a leaver's counterpart: their final active month
@@ -231,7 +231,7 @@ def analyze_workforce(
     ----------
     df : pd.DataFrame
         Raw sales DataFrame as returned by
-        :func:`revinsight.utils.load_and_validate_data` — it must
+        :func:`store_staffing.utils.load_and_validate_data` — it must
         contain the ``Month`` column and the ``sale spN`` columns.
     start_month : int, optional
         Calendar month (1-12) that dataset month 1 corresponds to

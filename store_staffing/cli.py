@@ -1,9 +1,9 @@
-"""Command-line interface for the RevInsight staffing analyzer.
+"""Command-line interface for the Store Staffing Analyzer staffing analyzer.
 
 Two sub-commands are available::
 
-    python -m revinsight.cli run data/RevI-Test.csv
-    python -m revinsight.cli serve --port 8000
+    python -m store_staffing.cli run data/RevI-Test.csv
+    python -m store_staffing.cli serve --port 8000
 
 For backwards compatibility the ``run`` sub-command is implied when the
 first argument is a path to a dataset::
@@ -29,9 +29,9 @@ __all__ = ["main", "build_parser"]
 BANNER = r"""
 +==================================================================+
 |                                                                  |
-|            RevInsight Store Staffing Analyzer  v2.0              |
-|            ------------------------------------------             |
-|            Data-Driven Staffing Optimisation Platform            |
+|      Store Staffing Analyzer  v2.1.0                             |
+| ------------------------------------------                       |
+| Data-Driven Staffing Optimisation Platform                       |
 |                                                                  |
 +==================================================================+
 """
@@ -69,9 +69,9 @@ def build_parser() -> argparse.ArgumentParser:
         The configured parser.
     """
     parser = argparse.ArgumentParser(
-        prog="revinsight",
+        prog="store_staffing",
         description=(
-            "RevInsight analyses retail store sales data to provide data-driven "
+            "Store Staffing Analyzer analyses retail store sales data to provide data-driven "
             "staffing recommendations: EDA, forecasting, financial modelling, "
             "scenario comparison and report generation."
         ),
@@ -81,10 +81,10 @@ def build_parser() -> argparse.ArgumentParser:
             "  python run.py data/RevI-Test.csv\n"
             "  python run.py data/RevI-Test.csv --salary 3.5 --commission 0.06\n"
             "  python run.py data/RevI-Test.csv --output-dir my_output\n"
-            "  python -m revinsight.cli serve --port 8000\n"
+            "  python -m store_staffing.cli serve --port 8000\n"
         ),
     )
-    parser.add_argument("--version", action="version", version="revinsight 2.1.0")
+    parser.add_argument("--version", action="version", version="store_staffing 2.1.0")
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose/debug logging."
     )
@@ -255,7 +255,7 @@ def _serve_command(args: argparse.Namespace) -> int:
     _safe_print("-" * 66)
 
     uvicorn.run(
-        "revinsight.api.main:app",
+        "store_staffing.api.main:app",
         host=args.host,
         port=args.port,
         reload=args.reload,

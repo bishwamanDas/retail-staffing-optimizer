@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "revinsight"
+name = "store-staffing-analyzer"
 version = "2.1.0"
-description = "RevInsight - Store Staffing Analyzer: data-driven retail staffing optimisation (forecasting, financial modelling, workforce analytics, REST API + web dashboard)."
+description = "Store Staffing Analyzer - Store Staffing Analyzer: data-driven retail staffing optimisation (forecasting, financial modelling, workforce analytics, REST API + web dashboard)."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -63,7 +63,7 @@ web = [
 ]
 
 [project.scripts]
-revinsight = "revinsight.cli:main"
+store-staffing-analyzer = "store_staffing.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/bishwamanDas/retail-staffing-optimizer"
@@ -75,7 +75,7 @@ Issues = "https://github.com/bishwamanDas/retail-staffing-optimizer/issues"
 # --------------------------------------------------------------------------- #
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["revinsight*"]
+include = ["store_staffing*"]
 exclude = [
     "tests*",
     "data*",
@@ -88,7 +88,7 @@ exclude = [
 
 [tool.setuptools.package-data]
 # The package is pure Python: no non-code files need to be shipped in the wheel.
-revinsight = []
+store_staffing = []
 
 # --------------------------------------------------------------------------- #
 # Testing                                                                      #
@@ -116,7 +116,7 @@ select = ["E", "F", "W", "I", "B", "UP", "C4"]
 ignore = ["E501", "B008"]
 
 [tool.ruff.lint.per-file-ignores]
-"revinsight/api/*" = ["B008"]
+"store_staffing/api/*" = ["B008"]
 "tests/*" = ["E402"]
 
 [tool.black]

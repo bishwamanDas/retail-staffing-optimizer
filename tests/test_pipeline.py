@@ -7,14 +7,14 @@ import json
 import pandas as pd
 import pytest
 
-from revinsight.config import AnalysisConfig
-from revinsight.pipeline import (
+from store_staffing.config import AnalysisConfig
+from store_staffing.pipeline import (
     build_forecast_path,
     detect_cycle_length,
     run_analysis,
     simulate_scenarios,
 )
-from revinsight.utils import to_jsonable
+from store_staffing.utils import to_jsonable
 
 REQUIRED_TOP_LEVEL = {
     "schema_version",

@@ -43,7 +43,7 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Run test suite
-        run: pytest tests/ -v --cov=revinsight --cov-report=term-missing
+        run: pytest tests/ -v --cov=store_staffing --cov-report=term-missing
 
       - name: Trigger the Render deploy hook
         env:

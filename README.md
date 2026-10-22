@@ -1,4 +1,4 @@
-# RevInsight — Store Staffing Analytics
+# Store Staffing Analyzer — Retail Staffing Analytics
 
 **A production-grade decision engine for retail staffing.**
 Forecast demand, price every staffing policy, and quantify the risk before you
@@ -9,7 +9,7 @@ make the hire.
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-203%20passing-brightgreen.svg)](tests/)
 
-> **Live demo** → [revinsight.app](#-live-demo) &nbsp;·&nbsp;
+> **Live demo** → [Store Staffing Analyzer](#-live-demo) &nbsp;·&nbsp;
 > **API docs** → `/api/docs` &nbsp;·&nbsp;
 > **Report** → `reports/Recommendation_Report.pdf`
 
@@ -18,7 +18,7 @@ make the hire.
 ## Table of contents
 
 - [The problem](#the-problem)
-- [What RevInsight does](#what-revinsight-does)
+- [What Store Staffing Analyzer does](#what-store-staffing-analyzer-does)
 - [Key results](#key-results)
 - [Screenshots](#screenshots)
 - [Live demo](#-live-demo)
@@ -46,13 +46,13 @@ short-handed, and the owner has to answer four questions:
 3. How **certain** can we be — what if sales, salary or commission move?
 4. Is there a **smarter rule** than "always replace the leaver"?
 
-Most answers stop at "we hired someone, margin went up". RevInsight is built
-to answer all four with a defensible statistical model, a live dashboard, and
-a board-ready report.
+Most answers stop at "we hired someone, margin went up". This project answers
+all four with a defensible statistical model, a live dashboard, and a
+board-ready report.
 
 ---
 
-## What RevInsight does
+## What Store Staffing Analyzer does
 
 | Capability | Detail |
 |---|---|
@@ -145,7 +145,7 @@ git push                                   # push to your GitHub repo
 ```
 
 Render picks up `render.yaml` automatically: it installs `requirements.txt`,
-runs `uvicorn revinsight.api.main:app`, and health-checks `/api/v1/health`.
+runs `uvicorn store_staffing.api.main:app`, and health-checks `/api/v1/health`.
 See [Deployment](#deployment) for the Docker, Fly.io and local-Docker paths.
 
 ---
@@ -199,7 +199,7 @@ python run.py data/RevI-Test.csv --no-charts        # numbers only, fast
 ```bash
 python run.py serve --port 8000
 # or
-uvicorn revinsight.api.main:app --reload --port 8000
+uvicorn store_staffing.api.main:app --reload --port 8000
 ```
 
 Open <http://127.0.0.1:8000> — the dashboard and the API share one origin.
@@ -213,10 +213,10 @@ Open <http://127.0.0.1:8000> — the dashboard and the API share one origin.
 │                        Presentation                              │
 │   web/ (vanilla JS + Chart.js)   │   CLI   │   PDF / HTML report │
 └───────────────┬──────────────────┴─────────┴──────────┬──────────┘
-                │  /api/v1 (FastAPI)                    │  revinsight.cli
+                │  /api/v1 (FastAPI)                    │  store_staffing.cli
 ┌───────────────▼──────────────────────────────────────▼──────────┐
 │                        Orchestration                            │
-│              revinsight/pipeline.py  →  one payload             │
+│              store_staffing/pipeline.py  →  one payload             │
 │              (identical numbers for every surface)              │
 └───────────────┬──────────────────────────────────────────────────┘
                 │
@@ -267,7 +267,7 @@ CSV ──► load_and_validate_data ──► prepare_monthly_summary
 ### 1. Forecasting — walk-forward validation, not a single split
 
 A single train/test split answers "how did this model do on *those* 12
-months?". RevInsight instead evaluates every candidate on **rolling origins**
+months?". The engine instead evaluates every candidate on **rolling origins**
 that end at the last observation, forecasting the **real deployment horizon**
 (6 months) at each origin:
 
@@ -290,7 +290,7 @@ widen realistically with the horizon instead of assuming homoscedasticity.
 
 Comparing "months with 7 staff" against "months with 8 staff" is invalid: the
 store grew for 81 months, and the 8-staff months are not a random sample.
-RevInsight regresses **month-on-month changes**:
+The engine regresses **month-on-month changes**:
 
 ```
 ΔSales ~ trend + month-of-year effects + ΔHeadcount
@@ -302,7 +302,7 @@ effect, and it is what drives every scenario calculation.
 
 ### 3. Seasonality — detecting the cycle that is actually there
 
-An annual model cannot absorb a semi-annual pattern. RevInsight measures the
+An annual model cannot absorb a semi-annual pattern. The engine measures the
 autocorrelation of the detrended series at lags 3, 4, 6 and 12 and selects the
 **shortest dominant period** — 6 months for this dataset, revealing March and
 September troughs that a 12-month decomposition would have mislabelled as
@@ -331,8 +331,8 @@ from the forecast interval.
 ## Project structure
 
 ```
-revinsight/
-├── revinsight/                     # the importable package
+Store Staffing Analyzer/
+├── store_staffing/                     # the importable package
 │   ├── __init__.py                 # version + lazy exports
 │   ├── config.py                   # AnalysisConfig: all business assumptions
 │   ├── utils.py                    # loading, validation, aggregation
@@ -415,16 +415,16 @@ Interactive documentation lives at `/api/docs`.
 
 ## Configuration
 
-Every assumption is a single validated object (`revinsight/config.py`) and can
+Every assumption is a single validated object (`store_staffing/config.py`) and can
 be overridden from the CLI, the API or the environment.
 
 | Setting | Default | CLI | Environment |
 |---|---|---|---|
-| Monthly salary per employee | Rs. 3.0 L | `--salary` | `REVINSIGHT_SALARY` |
-| Commission rate | 5 % | `--commission` | `REVINSIGHT_COMMISSION` |
-| Cost of goods sold | 50 % | — | `REVINSIGHT_COGS` |
-| Forecast horizon | 6 months | `--forecast-months` | `REVINSIGHT_FORECAST_MONTHS` |
-| Random seed | 42 | — | `REVINSIGHT_SEED` |
+| Monthly salary per employee | Rs. 3.0 L | `--salary` | `SSA_SALARY` |
+| Commission rate | 5 % | `--commission` | `SSA_COMMISSION` |
+| Cost of goods sold | 50 % | — | `SSA_COGS` |
+| Forecast horizon | 6 months | `--forecast-months` | `SSA_FORECAST_MONTHS` |
+| Random seed | 42 | — | `SSA_SEED` |
 | First dataset month is January | Jan | `--start-month` | — |
 
 See `.env.example` for the full list.
@@ -445,7 +445,7 @@ for zero console errors and zero horizontal overflow at 390 / 820 / 1280 /
 ```bash
 pip install -r requirements-dev.txt
 pytest                       # 203 tests
-pytest --cov=revinsight --cov-report=term-missing
+pytest --cov=store_staffing --cov-report=term-missing
 ```
 
 The suite covers the data contract, every model's edge cases, the financial
@@ -465,7 +465,7 @@ builds the Docker image on every push.
 | **Render** | Push to GitHub → *New → Blueprint* (uses `render.yaml`) |
 | **Fly.io** | `fly launch && fly deploy` (uses `fly.toml`) |
 | **Docker** | `docker compose up --build` |
-| **Any PaaS** | `pip install -r requirements.txt && uvicorn revinsight.api.main:app --host 0.0.0.0 --port $PORT` |
+| **Any PaaS** | `pip install -r requirements.txt && uvicorn store_staffing.api.main:app --host 0.0.0.0 --port $PORT` |
 
 The container runs as a non-root user, ships a `python`-based health check
 (no `curl` dependency), and is configured for headless chart generation.

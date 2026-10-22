@@ -1,4 +1,4 @@
-"""Shared pytest fixtures for the RevInsight test-suite."""
+"""Shared pytest fixtures for the Store Staffing Analyzer test-suite."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from revinsight.utils import load_and_validate_data, prepare_monthly_summary  # noqa: E402
+from store_staffing.utils import load_and_validate_data, prepare_monthly_summary  # noqa: E402
 
 
 @pytest.fixture(scope="session")

@@ -1,5 +1,5 @@
 /**
- * RevInsight — application bootstrap, state and rendering orchestration.
+ * Store Staffing Analyzer — application bootstrap, state and rendering orchestration.
  *
  * The module owns:
  *   • theme handling (persisted to localStorage)
@@ -29,7 +29,7 @@ const state = {
   loading: true,
 };
 
-const THEME_KEY = 'revinsight.theme';
+const THEME_KEY = 'store_staffing.theme';
 const HEALTH_INTERVAL = 30000;
 
 let simulator = null;
@@ -868,7 +868,7 @@ function downloadScenarioCsv() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'revinsight-scenario-comparison.csv';
+    link.download = 'store_staffing-scenario-comparison.csv';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -1,10 +1,10 @@
 # =============================================================================
-# RevInsight - Store Staffing Analyzer
+# Store Staffing Analyzer
 # Multi-stage production image: build wheels in a throw-away builder, ship a
 # slim runtime that runs as a non-root user.
 #
-# Build:  docker build -t revinsight:latest .
-# Run:    docker run --rm -p 8000:8000 revinsight:latest
+# Build:  docker build -t store_staffing:latest .
+# Run:    docker run --rm -p 8000:8000 store_staffing:latest
 # =============================================================================
 
 # ---------------------------------------------------------------------------- #
@@ -35,7 +35,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Now the project itself.
 COPY pyproject.toml README.md ./
-COPY revinsight/ ./revinsight/
+COPY store_staffing/ ./store_staffing/
 COPY run.py ./
 RUN pip install --no-cache-dir .
 
@@ -50,12 +50,12 @@ ENV PATH="/opt/venv/bin:$PATH" \
     PYTHONPATH=/app \
     MPLBACKEND=Agg \
     MPLCONFIGDIR=/tmp/matplotlib \
-    REVINSIGHT_SALARY=3.0 \
-    REVINSIGHT_COMMISSION=0.05 \
-    REVINSIGHT_COGS=0.50 \
-    REVINSIGHT_FORECAST_MONTHS=6 \
-    REVINSIGHT_SEED=42 \
-    REVINSIGHT_CORS_ORIGINS=*
+    SSA_SALARY=3.0 \
+    SSA_COMMISSION=0.05 \
+    SSA_COGS=0.50 \
+    SSA_FORECAST_MONTHS=6 \
+    SSA_SEED=42 \
+    SSA_CORS_ORIGINS=*
 
 # Non-root application user (uid/gid 10001).
 RUN groupadd --gid 10001 appuser \
@@ -69,7 +69,7 @@ COPY --from=builder /opt/venv /opt/venv
 # Application source: PYTHONPATH=/app makes this copy take precedence over the
 # copy installed inside the virtualenv, so the package root stays /app (the
 # API resolves the bundled data/ and web/ folders relative to it).
-COPY --from=builder /build/revinsight /app/revinsight
+COPY --from=builder /build/store_staffing /app/store_staffing
 COPY --from=builder /build/run.py /app/run.py
 
 # Static dashboard and the bundled sample datasets.
@@ -90,4 +90,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
 
 VOLUME ["/app/runs"]
 
-CMD ["uvicorn", "revinsight.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "store_staffing.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

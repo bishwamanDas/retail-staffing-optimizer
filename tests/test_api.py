@@ -7,7 +7,7 @@ import io
 import pytest
 from fastapi.testclient import TestClient
 
-from revinsight.api.main import app
+from store_staffing.api.main import app
 
 
 @pytest.fixture(scope="module")

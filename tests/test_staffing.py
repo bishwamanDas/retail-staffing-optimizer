@@ -5,7 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from revinsight.staffing_model import (
+from store_staffing.staffing_model import (
     NEW_HIRE_RAMP_FACTORS,
     analyze_productivity,
     backtest_staffing_rules,

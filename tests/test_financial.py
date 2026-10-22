@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from revinsight.financial_analysis import (
+from store_staffing.financial_analysis import (
     calculate_break_even_analysis,
     calculate_contribution_margin,
     calculate_historical_margins,

@@ -5,10 +5,10 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from revinsight.anomaly import detect_anomalies
-from revinsight.people import analyze_workforce
-from revinsight.seasonality import decompose_series, seasonal_indices, seasonality_strength
-from revinsight.utils import prepare_monthly_summary
+from store_staffing.anomaly import detect_anomalies
+from store_staffing.people import analyze_workforce
+from store_staffing.seasonality import decompose_series, seasonal_indices, seasonality_strength
+from store_staffing.utils import prepare_monthly_summary
 
 
 class TestSeasonality:

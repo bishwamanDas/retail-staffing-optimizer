@@ -1,6 +1,6 @@
-"""Seasonal decomposition and calendar analysis for RevInsight.
+"""Seasonal decomposition and calendar analysis for Store Staffing Analyzer.
 
-This module isolates the *calendar* dimension of the RevInsight
+This module isolates the *calendar* dimension of the Store Staffing Analyzer
 analytics engine.  It decomposes a monthly sales series into
 trend / seasonal / residual components, derives normalised seasonal
 indices per calendar month and quantifies how much of the observed
@@ -185,7 +185,7 @@ def _resolve_month_of_year(df: pd.DataFrame) -> np.ndarray:
 
     Uses the ``MonthOfYear`` column when present, otherwise derives it
     from the ``Month`` column with
-    :func:`revinsight.utils.infer_month_of_year`, otherwise assumes a
+    :func:`store_staffing.utils.infer_month_of_year`, otherwise assumes a
     January start.
 
     Parameters
@@ -469,7 +469,7 @@ def seasonal_indices(
     ----------
     summary_df : pd.DataFrame
         Monthly summary as produced by
-        :func:`revinsight.utils.prepare_monthly_summary`.  Must contain
+        :func:`store_staffing.utils.prepare_monthly_summary`.  Must contain
         a ``Sales`` column; ``MonthOfYear`` is used when available and
         derived from ``Month`` otherwise.
     period : int, optional

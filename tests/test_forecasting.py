@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from revinsight.forecasting import (
+from store_staffing.forecasting import (
     MODEL_ZOO,
     bootstrap_prediction_interval,
     evaluate_model,

@@ -8,8 +8,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from revinsight.config import AnalysisConfig, config_from_env
-from revinsight.utils import (
+from store_staffing.config import AnalysisConfig, config_from_env
+from store_staffing.utils import (
     calculate_break_even_sales,
     calculate_gross_margin,
     count_active_employees,
@@ -30,7 +30,7 @@ from revinsight.utils import (
 # Configuration                                                                #
 # --------------------------------------------------------------------------- #
 class TestAnalysisConfig:
-    """Behaviour of :class:`revinsight.config.AnalysisConfig`."""
+    """Behaviour of :class:`store_staffing.config.AnalysisConfig`."""
 
     def test_defaults_are_valid(self) -> None:
         config = AnalysisConfig()
@@ -78,14 +78,14 @@ class TestAnalysisConfig:
         assert payload["effective_margin_rate"] == pytest.approx(0.45)
 
     def test_config_from_env(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setenv("REVINSIGHT_SALARY", "4.25")
-        monkeypatch.setenv("REVINSIGHT_COMMISSION", "0.08")
+        monkeypatch.setenv("SSA_SALARY", "4.25")
+        monkeypatch.setenv("SSA_COMMISSION", "0.08")
         config = config_from_env()
         assert config.salary_per_employee == 4.25
         assert config.commission_rate == 0.08
 
     def test_config_from_env_ignores_garbage(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        monkeypatch.setenv("REVINSIGHT_SALARY", "not-a-number")
+        monkeypatch.setenv("SSA_SALARY", "not-a-number")
         config = config_from_env()
         assert config.salary_per_employee == 3.0
 
@@ -94,7 +94,7 @@ class TestAnalysisConfig:
 # Data loading                                                                 #
 # --------------------------------------------------------------------------- #
 class TestDataLoading:
-    """Behaviour of :func:`revinsight.utils.load_and_validate_data`."""
+    """Behaviour of :func:`store_staffing.utils.load_and_validate_data`."""
 
     def test_loads_sample_dataset(self, raw_df: pd.DataFrame) -> None:
         assert len(raw_df) == 81
@@ -205,7 +205,7 @@ class TestCalculations:
 # Monthly summary                                                              #
 # --------------------------------------------------------------------------- #
 class TestMonthlySummary:
-    """Behaviour of :func:`revinsight.utils.prepare_monthly_summary`."""
+    """Behaviour of :func:`store_staffing.utils.prepare_monthly_summary`."""
 
     def test_columns_present(self, summary_df: pd.DataFrame) -> None:
         for column in (

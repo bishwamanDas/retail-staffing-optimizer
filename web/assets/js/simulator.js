@@ -1,5 +1,5 @@
 /**
- * RevInsight — what-if simulator.
+ * Store Staffing Analyzer — what-if simulator.
  *
  * Owns the simulator controls, keeps the readouts in sync with the sliders and
  * drives `POST /api/v1/simulate`. Releasing a slider schedules a debounced

@@ -1,13 +1,13 @@
-# Fly.io configuration for RevInsight - Store Staffing Analyzer
+# Fly.io configuration for Store Staffing Analyzer
 #
 # Deploy with:
 #   fly launch --copy-config --no-deploy
 #   fly deploy
 #
-# NOTE: the app name must be globally unique on Fly.io - rename "revinsight"
+# NOTE: the app name must be globally unique on Fly.io - rename "store_staffing"
 # if it is already taken.
 
-app = "revinsight"
+app = "store_staffing"
 primary_region = "bom"
 
 [build]
@@ -21,12 +21,12 @@ primary_region = "bom"
   PORT = "8000"
   PYTHONUNBUFFERED = "1"
   MPLBACKEND = "Agg"
-  REVINSIGHT_SALARY = "3.0"
-  REVINSIGHT_COMMISSION = "0.05"
-  REVINSIGHT_COGS = "0.50"
-  REVINSIGHT_FORECAST_MONTHS = "6"
-  REVINSIGHT_SEED = "42"
-  REVINSIGHT_CORS_ORIGINS = "*"
+  SSA_SALARY = "3.0"
+  SSA_COMMISSION = "0.05"
+  SSA_COGS = "0.50"
+  SSA_FORECAST_MONTHS = "6"
+  SSA_SEED = "42"
+  SSA_CORS_ORIGINS = "*"
 
 [http_service]
   internal_port = 8000

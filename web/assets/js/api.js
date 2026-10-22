@@ -1,5 +1,5 @@
 /**
- * RevInsight — API client.
+ * Store Staffing Analyzer — API client.
  *
  * Thin, defensive wrapper around the FastAPI service mounted at `/api/v1`.
  * Every network call returns a promise that either resolves with parsed JSON

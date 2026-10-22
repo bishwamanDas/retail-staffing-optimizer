@@ -1,4 +1,4 @@
-"""End-to-end orchestration of the RevInsight analytics pipeline.
+"""End-to-end orchestration of the Store Staffing Analyzer analytics pipeline.
 
 :func:`run_analysis` chains every analytical stage and returns a single
 JSON-serialisable payload that matches the public API contract
@@ -395,7 +395,7 @@ def run_analysis(
         written except the charts needed by the report.
     config : AnalysisConfig, optional
         Business assumptions (defaults to
-        :data:`revinsight.config.DEFAULT_CONFIG`).
+        :data:`store_staffing.config.DEFAULT_CONFIG`).
     start_month : int, optional
         Calendar month that dataset month 1 corresponds to.
     generate_artifacts : bool, optional
@@ -466,7 +466,7 @@ def run_analysis(
     else:
         # No artefact directory was requested: keep the forecast charts in a
         # temporary folder instead of polluting the working directory.
-        temp_charts_dir = tempfile.mkdtemp(prefix="revinsight-charts-")
+        temp_charts_dir = tempfile.mkdtemp(prefix="store_staffing-charts-")
         charts_dir = temp_charts_dir
 
     # ---- (d) seasonality ------------------------------------------------ #

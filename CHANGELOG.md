@@ -67,19 +67,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Sensitivity and Monte-Carlo analysis** — `sensitivity` produces a tornado chart
   block, a two-way parameter grid and a seeded probabilistic margin distribution
   (tornado, grid and Monte-Carlo blocks are exposed through the API).
-- **FastAPI service and static web dashboard** — `revinsight.api` serves a versioned
+- **FastAPI service and static web dashboard** — `store_staffing.api` serves a versioned
   REST API under `/api/v1` (health, datasets, analyses, charts, PDF/HTML/CSV artefacts,
   simulation and sensitivity endpoints) and hosts the `web/` single-page dashboard from
   the same origin, so the whole product runs as one process.
 - **Professional PDF and HTML reporting** — `report_generator` produces a branded PDF
   recommendation report and an HTML twin, plus a plain-text recommendation and a CSV
   export of the monthly results.
-- **Packaging and CLI** — PEP 621 `pyproject.toml` with a `revinsight` console script,
-  a structured `revinsight.cli` (`run` / `serve` sub-commands) and a thin `run.py`
+- **Packaging and CLI** — PEP 621 `pyproject.toml` with a `store_staffing` console script,
+  a structured `store_staffing.cli` (`run` / `serve` sub-commands) and a thin `run.py`
   wrapper that keeps `python run.py data/RevI-Test.csv` working.
-- **Centralised configuration** — `revinsight.config.AnalysisConfig` holds every
+- **Centralised configuration** — `store_staffing.config.AnalysisConfig` holds every
   business assumption, is validated on construction and can be overridden through
-  `REVINSIGHT_*` environment variables.
+  `STORE STAFFING ANALYZER_*` environment variables.
 - **Test suite** — `pytest` suite covering configuration, forecasting, financial
   analysis, the staffing model, the pipeline and the HTTP API.
 - **CI/CD and packaging infrastructure** — GitHub Actions workflows (test matrix on
@@ -91,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - The project was reorganised from a flat `src/` package into the importable
-  `revinsight/` package, with `revinsight.api` added as a sub-package.
+  `store_staffing/` package, with `store_staffing.api` added as a sub-package.
 - All configuration now flows through a single validated object instead of being
   scattered across modules and CLI flags.
 - Forecast model selection is driven by a rolling-origin backtest instead of a single
@@ -101,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 - The v1 `src/` module paths (`src.forecasting`, `src.staffing_model`, ...) are no
-  longer importable; use the `revinsight.*` equivalents.
+  longer importable; use the `store_staffing.*` equivalents.
 
 ## [1.0.0] - 2025-06-01
 

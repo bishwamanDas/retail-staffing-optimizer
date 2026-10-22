@@ -1,5 +1,5 @@
 """
-Visualization module for RevInsight branded-clothing store staffing analysis.
+Visualization module for Store Staffing Analyzer branded-clothing store staffing analysis.
 
 Generates publication-quality charts covering sales trends, employee
 productivity, statistical distributions, correlation analysis, rolling
@@ -757,7 +757,7 @@ def plot_decomposition(
     Parameters
     ----------
     decomposition : dict
-        Output of :func:`revinsight.seasonality.decompose_series` with
+        Output of :func:`store_staffing.seasonality.decompose_series` with
         ``observed``, ``trend``, ``seasonal`` and ``residual`` keys.
     output_dir : str
         Directory where the PNG will be written.
@@ -818,7 +818,7 @@ def plot_anomalies(
     summary_df : pd.DataFrame
         Monthly summary containing ``Month`` and ``Sales``.
     anomalies : list
-        Anomaly records from :func:`revinsight.anomaly.detect_anomalies`.
+        Anomaly records from :func:`store_staffing.anomaly.detect_anomalies`.
     output_dir : str
         Directory where the PNG will be written.
     """
@@ -866,7 +866,7 @@ def plot_workforce_tenure(workforce: dict[str, object], output_dir: str) -> None
     Parameters
     ----------
     workforce : dict
-        Output of :func:`revinsight.people.analyze_workforce`.
+        Output of :func:`store_staffing.people.analyze_workforce`.
     output_dir : str
         Directory where the PNG will be written.
     """
@@ -900,7 +900,7 @@ def plot_headcount_optimization(curve: list, output_dir: str, horizon: int = 6) 
     Parameters
     ----------
     curve : list
-        Rows produced by :func:`revinsight.staffing_model.optimize_headcount`.
+        Rows produced by :func:`store_staffing.staffing_model.optimize_headcount`.
     output_dir : str
         Directory where the PNG will be written.
     horizon : int, optional
@@ -1001,7 +1001,7 @@ def plot_tornado(tornado: dict[str, object], output_dir: str) -> None:
     Parameters
     ----------
     tornado : dict
-        Output of :func:`revinsight.sensitivity.tornado_analysis`.
+        Output of :func:`store_staffing.sensitivity.tornado_analysis`.
     output_dir : str
         Directory where the PNG will be written.
     """
@@ -1059,7 +1059,7 @@ def generate_all_charts(
     scenarios_dict: dict[str, float] | None = None,
     extra_charts: dict[str, object] | None = None,
 ) -> dict[str, str]:
-    """Generate **all** RevInsight charts and save them to *output_dir*.
+    """Generate **all** Store Staffing Analyzer charts and save them to *output_dir*.
 
     Parameters
     ----------
@@ -1085,7 +1085,7 @@ def generate_all_charts(
         Dictionary mapping chart names to their file paths.
     """
     print(f"\n{'='*60}")
-    print("  RevInsight -- Generating Publication-Quality Charts")
+    print("  Store Staffing Analyzer -- Generating Publication-Quality Charts")
     print(f"{'='*60}")
     print(f"  Output directory: {output_dir}\n")
 
